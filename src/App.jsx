@@ -1,35 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Box, Container } from "@chakra-ui/react";
+import Card from "./components/common/Card";
+import ToggleModeButton from "./components/common/ToggleModeButton";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Container maxW="1200px" p={{ base: 4, md: 6 }}>
+      <Box p={{ base: 0, md: 6 }}>
+        <h1>App</h1>
+        <ToggleModeButton />
+      </Box>
+
+      <Card>
+        <p>This is a card. Colors change automatically with Dark/Light Mode!</p>
+      </Card>
+    </Container>
+  );
 }
 
-export default App
+export default App;
