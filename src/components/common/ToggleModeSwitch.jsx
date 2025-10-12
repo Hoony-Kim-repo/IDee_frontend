@@ -1,9 +1,15 @@
 import { Icon, Switch } from "@chakra-ui/react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 
 const ToggleModeSwitch = () => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");

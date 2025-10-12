@@ -1,4 +1,5 @@
 import { Box, Image } from "@chakra-ui/react";
+import logo from "../../assets/IDee_logo-Transparent.png";
 import ToggleModeSwitch from "../common/ToggleModeSwitch";
 
 const Header = () => {
@@ -15,7 +16,7 @@ const Header = () => {
       alignItems={"center"}
     >
       <Box>
-        <Image boxSize={"60px"} src="IDee_logo-Transparent.png" />
+        <Image boxSize={"60px"} src={logo} />
       </Box>
 
       <Box>

@@ -1,0 +1,23 @@
+- "id": "1"
+  "img": "IDee_logo-Transparent.png" # Replace later
+  "imgAlt": "logo" # Replace later
+  "title": "Unique"
+  "description":
+    - "Create your own web / mobile ID."
+    - "You can custom your beauty ID."
+
+- "id": "2"
+  "img": "IDee_logo-Transparent.png" # Replace later
+  "imgAlt": "logo" # Replace later
+  "title": "Skills"
+  "description":
+    - "Show your own Skills and achievements."
+    - "This e-ID will show you as a professional person."
+
+- "id": "3"
+  "img": "IDee_logo-Transparent.png" # Replace later
+  "imgAlt": "logo" # Replace later
+  "title": "Social"
+  "description":
+    - "You can exchange your ID with your friends."
+    - "Easily connect with other people."
