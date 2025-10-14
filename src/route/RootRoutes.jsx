@@ -1,6 +1,7 @@
 import ErrorLayout from "../layouts/ErrorLayout";
 import RootLayout from "../layouts/RootLayout";
-import Home from "../pages/Home";
+import ExampleFront from "../pages/Example/ExampleFront";
+import Home from "../pages/Home/Home";
 
 const RootRoutes = [
   {
@@ -11,6 +12,10 @@ const RootRoutes = [
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "/example",
+        Component: ExampleFront,
       },
     ],
   },

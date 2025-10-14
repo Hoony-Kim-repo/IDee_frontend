@@ -1,6 +1,8 @@
 import { Box, Image } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 import logo from "../../assets/IDee_logo-Transparent.png";
 import ToggleModeSwitch from "../common/ToggleModeSwitch";
+import Navigation from "./Navigation";
 
 const Header = () => {
   return (
@@ -15,11 +17,12 @@ const Header = () => {
       justifyContent={"space-between"}
       alignItems={"center"}
     >
-      <Box>
+      <NavLink to="/">
         <Image boxSize={"60px"} src={logo} />
-      </Box>
+      </NavLink>
 
-      <Box>
+      <Box display={"flex"}>
+        <Navigation />
         <ToggleModeSwitch />
       </Box>
     </Box>
