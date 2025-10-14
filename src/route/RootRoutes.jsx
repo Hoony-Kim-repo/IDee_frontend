@@ -1,6 +1,6 @@
 import ErrorLayout from "../layouts/ErrorLayout";
 import RootLayout from "../layouts/RootLayout";
-import ExampleFront from "../pages/Example/ExampleFront/ExampleFront";
+import ExampleFront from "../pages/example/front/ExampleFront";
 import Home from "../pages/Home/Home";
 
 const RootRoutes = [
