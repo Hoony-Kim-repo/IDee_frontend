@@ -1,7 +1,31 @@
 import { Box, DataList, Grid, Image } from "@chakra-ui/react";
 import { useTheme } from "next-themes";
 
-const ID_Body = ({ profileImg, items }) => {
+
+const items = [
+  {
+    label: "Name",
+    value: "Gihoon Kim",
+  },
+  {
+    label: "Prefered Name",
+    value: "Hoony Kim",
+  },
+  {
+    label: "Address",
+    value: "Toronto",
+  },
+  {
+    label: "GitHub Link",
+    value: "https://github.com/Hoony-Kim-repo",
+  },
+  {
+    label: "LinkedIn Link",
+    value: "https://www.linkedin.com/in/gihoon-kim-532627196/",
+  },
+];
+
+const ID_Body = ({ profileImg }) => {
   const { theme } = useTheme();
 
   return (
