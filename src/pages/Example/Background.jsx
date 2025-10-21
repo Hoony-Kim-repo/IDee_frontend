@@ -13,7 +13,7 @@ const ExampleBackground = () => {
       bgRepeat="no-repeat"
       borderRadius="2xl"
       opacity={0.65}
-      zIndex={0}
+      zIndex={-999}
     />
   );
 };
