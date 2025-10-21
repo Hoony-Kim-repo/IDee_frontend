@@ -1,7 +1,6 @@
 import { Box, DataList, Grid, Image } from "@chakra-ui/react";
 import { useTheme } from "next-themes";
 
-
 const items = [
   {
     label: "Name",
