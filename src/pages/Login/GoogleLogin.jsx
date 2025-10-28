@@ -12,12 +12,13 @@ const GoogleLogin = () => {
       const idToken = await user.getIdToken();
 
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/googleLogin`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/googleLogin`,
         {},
         {
           headers: {
             Authorization: `Bearer ${idToken}`,
           },
+          withCredentials: true,
         }
       );
 
