@@ -11,6 +11,10 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    console.log(import.meta.env.VITE_BACKEND_URL);
+>>>>>>> 819103a... ISLoggined API getting success
     const isUserLoggedIn = async () => {
       try {
         const res = await axios.get(
