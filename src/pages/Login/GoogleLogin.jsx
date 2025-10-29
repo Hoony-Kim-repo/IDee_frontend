@@ -11,11 +11,7 @@ const GoogleLogin = () => {
       const user = result.user;
       const idToken = await user.getIdToken();
 
-<<<<<<< HEAD
       await axios.post(
-=======
-      const res = await axios.post(
->>>>>>> 819103a... ISLoggined API getting success
         `${import.meta.env.VITE_BACKEND_URL}/api/googleLogin`,
         {},
         {
