@@ -1,7 +1,7 @@
 import { Button, Image, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../Firebsae";
+import { auth, googleProvider } from "../../Firebase";
 
 const GoogleLogin = () => {
   const onLogin = async () => {
@@ -11,7 +11,7 @@ const GoogleLogin = () => {
       const user = result.user;
       const idToken = await user.getIdToken();
 
-      const res = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/googleLogin`,
         `${import.meta.env.VITE_BACKEND_URL}/api/googleLogin`,
         {},
@@ -22,8 +22,6 @@ const GoogleLogin = () => {
           withCredentials: true,
         }
       );
-
-      console.log("Backend Response: ", res.data);
     } catch (error) {
       console.error("Google Login Failed: ", error);
     }
