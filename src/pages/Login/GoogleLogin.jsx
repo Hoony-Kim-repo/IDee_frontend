@@ -13,7 +13,6 @@ const GoogleLogin = () => {
 
       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/googleLogin`,
-        `${import.meta.env.VITE_BACKEND_URL}/api/googleLogin`,
         {},
         {
           headers: {
