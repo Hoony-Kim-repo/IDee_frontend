@@ -1,11 +1,18 @@
-import { Box, HStack, Image } from "@chakra-ui/react";
+import { HStack, Image } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/IDee_logo-Transparent.png";
-import Authentication from "../Authentication/Authentication";
+import GoToLogin from "../Authentication/GoToLogin";
 import ToggleModeSwitch from "../common/ToggleModeSwitch";
 import Navigation from "./Navigation";
 
 const Header = () => {
+  const userInfo = useSelector((state) => state.user);
+
+  const onClick = () => {
+    console.log(userInfo);
+  };
+
   return (
     <HStack
       p={4}
@@ -13,12 +20,12 @@ const Header = () => {
       paddingRight={16}
       justifyContent={"space-between"}
     >
-      <NavLink to="/">
+      <NavLink to="/" onClick={onClick}>
         <Image boxSize={"60px"} src={logo} />
       </NavLink>
 
       <HStack gap={4}>
-        <Authentication />
+        <GoToLogin />
         <Navigation />
         <ToggleModeSwitch />
       </HStack>
