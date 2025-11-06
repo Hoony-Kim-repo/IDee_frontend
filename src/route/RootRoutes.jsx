@@ -3,6 +3,8 @@ import RootLayout from "../layouts/RootLayout";
 import Example from "../pages/example/Example";
 import Home from "../pages/Home/Home";
 import LoginPage from "../pages/Login/Login";
+import { loginSignupAction } from "../pages/Login/Login.helper";
+import SignupPage from "../pages/Signup/SignupPage";
 
 const RootRoutes = [
   {
@@ -21,7 +23,12 @@ const RootRoutes = [
       {
         path: "login",
         Component: LoginPage,
-      }
+        action: loginSignupAction,
+      },
+      {
+        path: "Signup",
+        Component: SignupPage,
+      },
     ],
   },
 ];

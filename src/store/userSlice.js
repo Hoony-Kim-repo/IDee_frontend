@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoggedIn: false,
-  userInfo: null, // uid, email
+  userInfo: null, // uid, email, provider
 };
 
 const userSlice = createSlice({
@@ -14,9 +14,9 @@ const userSlice = createSlice({
       state.userInfo = action.payload;
     },
     clearUser(state) {
-        state.isLoggedIn = false;
-        state.userInfo = null;
-    }
+      state.isLoggedIn = false;
+      state.userInfo = null;
+    },
   },
 });
 

@@ -2,7 +2,6 @@ import { HStack, Image } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/IDee_logo-Transparent.png";
-import GoToLogin from "../Authentication/GoToLogin";
 import ToggleModeSwitch from "../common/ToggleModeSwitch";
 import Navigation from "./Navigation";
 
@@ -25,7 +24,6 @@ const Header = () => {
       </NavLink>
 
       <HStack gap={4}>
-        <GoToLogin />
         <Navigation />
         <ToggleModeSwitch />
       </HStack>

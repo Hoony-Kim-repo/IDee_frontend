@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { clearUser } from "../../store/userSlice";
 
-const GoToLogin = () => {
+const LoginNavigation = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const dispatch = useDispatch();
@@ -23,4 +23,4 @@ const GoToLogin = () => {
   );
 };
 
-export default GoToLogin;
+export default LoginNavigation;
