@@ -13,9 +13,14 @@ const LoginNavigation = () => {
   };
 
   return !isLoggedIn ? (
-    <NavLink to={"/login"}>
-      <Text fontWeight={"bold"}>Login</Text>
-    </NavLink>
+    <>
+      <NavLink to={"/login"}>
+        <Text fontWeight={"bold"}>Login</Text>
+      </NavLink>
+      <NavLink to={"/signup"}>
+        <Text fontWeight={"bold"}>Sign Up</Text>
+      </NavLink>
+    </>
   ) : (
     <Button variant="ghost" onClick={onLogout}>
       <Text fontWeight={"bold"}>Logout</Text>

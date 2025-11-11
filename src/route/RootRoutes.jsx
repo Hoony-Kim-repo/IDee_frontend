@@ -2,9 +2,9 @@ import ErrorLayout from "../layouts/ErrorLayout";
 import RootLayout from "../layouts/RootLayout";
 import Example from "../pages/example/Example";
 import Home from "../pages/Home/Home";
-import LoginPage from "../pages/Login/Login";
-import { loginSignupAction } from "../pages/Login/Login.helper";
-import SignupPage from "../pages/Signup/SignupPage";
+import { AuthActions } from "../pages/LoginSignup/Actions";
+import LoginPage from "../pages/LoginSignup/Login/Login";
+import SignupPage from "../pages/LoginSignup/Signup/SignupPage";
 
 const RootRoutes = [
   {
@@ -23,11 +23,12 @@ const RootRoutes = [
       {
         path: "login",
         Component: LoginPage,
-        action: loginSignupAction,
+        action: AuthActions,
       },
       {
         path: "Signup",
         Component: SignupPage,
+        action: AuthActions,
       },
     ],
   },
