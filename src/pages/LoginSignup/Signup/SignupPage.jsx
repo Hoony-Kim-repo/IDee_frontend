@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { Form, useNavigate } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Form, useActionData, useNavigate } from "react-router-dom";
 import { toaster } from "../../../components/ui/toaster";
 import { googleAuthenticate } from "../Actions";
 import AuthPageContainer from "../AuthPageContainer";
@@ -9,6 +12,35 @@ import GoogleAuth from "../GoogleAuth";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const result = useActionData();
+
+  const sendEmailCode = useMutation({
+    mutationFn: async (email) => {
+      return axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/send-email-code`,
+        {
+          email: email,
+        }
+      );
+    },
+    onSuccess: (data) => {
+      console.log("Email code sent successfully:", data);
+    },
+    onError: (error) => {
+      console.error("Error sending email code:", error);
+    },
+  });
+
+  useEffect(() => {
+    if (result && result.success) {
+      // send verification code
+      console.log(result);
+      sendEmailCode.mutate(result.email);
+    } else {
+      // Error handling
+      console.log("result error", result);
+    }
+  }, [result]);
 
   const onGoogleSignup = async () => {
     setIsLoading(true);

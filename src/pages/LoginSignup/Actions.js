@@ -1,18 +1,27 @@
-// import axios from "axios";
-
 import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../Firebase";
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const AuthActions = async ({ request }) => {
   const formData = await request.formData();
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
-  console.log(formData.get("email"));
-  console.log(formData.get("action"));
+  const userEmail = formData.get("email");
+  const userPassword = formData.get("password");
+  const action = formData.get("action");
 
-  // const userEmail = formData.get("email");
+  if (!EMAIL_REGEX.test(userEmail)) {
+    return { success: false, message: "Invalid email format." };
+  }
 
-  // const res = await axios;
+  return {
+    success: true,
+    email: userEmail,
+    password: userPassword,
+    action: action,
+  };
 };
 
 const googleAuthenticate = async (action) => {
@@ -40,4 +49,14 @@ const googleAuthenticate = async (action) => {
   return res.data;
 };
 
-export { AuthActions, googleAuthenticate };
+const sendEmailCode = async (email) => {
+  const res = await axios.post(
+    `${import.meta.env.VITE_BACKEND_URL}/api/sendEmailVerificationCode`,
+    { body: { email } },
+    { headers: { "Content-Type": "application/json" } }
+  );
+
+  return res.data;
+};
+
+export { AuthActions, googleAuthenticate, sendEmailCode };
