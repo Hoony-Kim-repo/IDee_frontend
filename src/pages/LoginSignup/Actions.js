@@ -49,14 +49,25 @@ const googleAuthenticate = async (action) => {
   return res.data;
 };
 
-const sendEmailCode = async (email) => {
-  const res = await axios.post(
-    `${import.meta.env.VITE_BACKEND_URL}/api/sendEmailVerificationCode`,
-    { body: { email } },
-    { headers: { "Content-Type": "application/json" } }
-  );
-
-  return res.data;
+const sendVerificationCodeAction = async (email) => {
+  return axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/send-email-code`, {
+    email: email,
+  });
 };
 
-export { AuthActions, googleAuthenticate, sendEmailCode };
+const compareVerificationCodeAction = async (email, code) => {
+  return axios.post(
+    `${import.meta.env.VITE_BACKEND_URL}/api/compare-email-code`,
+    {
+      email: email,
+      code: code,
+    }
+  );
+};
+
+export {
+  AuthActions,
+  compareVerificationCodeAction,
+  googleAuthenticate,
+  sendVerificationCodeAction,
+};

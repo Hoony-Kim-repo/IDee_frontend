@@ -32,9 +32,9 @@ const passwordRequirements = [
   "4. Has special characters (e.g., !, @, #, $)",
 ];
 
-const EmailAuth = ({ title, action }) => {
+const EmailAuth = ({ title, action, isLoading }) => {
   const navigation = useNavigation();
-  const isPending = navigation.state === "submitting";
+  const isPending = navigation.state === "submitting" || isLoading;
 
   const [password, setPassword] = useState("");
 
