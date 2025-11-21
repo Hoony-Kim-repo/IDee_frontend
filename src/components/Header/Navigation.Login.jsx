@@ -1,18 +1,24 @@
 import { Button, Text } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
 import { NavLink } from "react-router-dom";
-import { clearUser } from "../../store/userSlice";
+import { auth } from "../../Firebase";
+import { useAuth } from "../../hooks/useAuth";
 
 const LoginNavigation = () => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
-  const onLogout = () => {
-    dispatch(clearUser());
+  const onLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  return !isLoggedIn ? (
+  return !user ? (
     <>
       <NavLink to={"/login"}>
         <Text fontWeight={"bold"}>Login</Text>

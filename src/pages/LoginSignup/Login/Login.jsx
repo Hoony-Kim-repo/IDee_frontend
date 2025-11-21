@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Form, useNavigate } from "react-router-dom";
 import { toaster } from "../../../components/ui/toaster";
-import { setUser } from "../../../store/userSlice";
 import { googleAuthenticate } from "../Actions";
 import AuthPageContainer from "../AuthPageContainer";
 import EmailAuth from "../EmailAuth";
@@ -11,7 +9,6 @@ import GoogleAuth from "../GoogleAuth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   const onGoogleLogin = async () => {
@@ -22,7 +19,6 @@ const LoginPage = () => {
 
       if (!login?.success) throw new Error(login.message);
 
-      dispatch(setUser({ uid: login.user.uid, email: login.user.email }));
       setIsLoading(false);
     };
 
