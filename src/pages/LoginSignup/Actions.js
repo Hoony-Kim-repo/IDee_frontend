@@ -1,12 +1,9 @@
 import axios from "axios";
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../Firebase";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const AuthActions = async ({ request }) => {
   const formData = await request.formData();
-  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const userEmail = formData.get("email");
   const userPassword = formData.get("password");
@@ -24,10 +21,7 @@ const AuthActions = async ({ request }) => {
   };
 };
 
-const googleAuthenticate = async (action) => {
-  const result = await signInWithPopup(auth, googleProvider);
-
-  const user = result.user;
+const googleAuthenticate = async (action, user) => {
   const idToken = await user.getIdToken();
 
   let URL = "";

@@ -6,6 +6,7 @@ import { setUser } from "../../../store/userSlice";
 import { googleAuthenticate } from "../Actions";
 import AuthPageContainer from "../AuthPageContainer";
 import EmailAuth from "../EmailAuth";
+import { googleSignIn } from "../FirebaseAuth";
 import GoogleAuth from "../GoogleAuth";
 
 const LoginPage = () => {
@@ -16,24 +17,21 @@ const LoginPage = () => {
   const onGoogleLogin = async () => {
     setIsLoading(true);
     const processLogin = async () => {
-      const result = await googleAuthenticate("login");
-      console.log(result);
+      const res = await googleSignIn();
+      const login = await googleAuthenticate("login", res);
 
-      if (result === null) {
-        throw new Error("The google account has not been registered yet.");
-      }
+      if (!login?.success) throw new Error(login.message);
 
-      dispatch(setUser({ uid: result.user.uid, email: result.user.email }));
-      navigate("/");
+      dispatch(setUser({ uid: login.user.uid, email: login.user.email }));
+      setIsLoading(false);
     };
 
     toaster.promise(processLogin, {
       success: () => {
-        setIsLoading(false);
+        navigate("/");
         return { title: "Login Success!" };
       },
       error: (err) => {
-        setIsLoading(false);
         return {
           title: "Login Failed!",
           description: err?.message || "An error occurred during login.",

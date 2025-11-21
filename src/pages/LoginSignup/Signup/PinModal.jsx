@@ -9,11 +9,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { compareVerificationCodeAction } from "../Actions";
 
-const PinModal = ({ email, isOpen, onClose }) => {
-  const navigate = useNavigate();
+const PinModal = ({ email, isOpen, onClose, onComplete }) => {
   const [code, setCode] = useState(["", "", "", ""]);
 
   useEffect(() => {
@@ -26,12 +24,7 @@ const PinModal = ({ email, isOpen, onClose }) => {
     const code = e.value.join("");
     const result = await compareVerificationCodeAction(email, code);
 
-    if (result.data.success) {
-      // Add user information to Database.
-      navigate("/login");
-    } else {
-      // pass error message to SignupPage to show error message.
-    }
+    onComplete(result.data.success);
 
     onClose();
   };
