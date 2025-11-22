@@ -1,9 +1,9 @@
 import { Box, Card, Container, Image, Separator } from "@chakra-ui/react";
 import { Fragment } from "react";
 import logo from "../../assets/IDee_logo-Transparent.png";
-import Background from "../../components/Home/Background";
-import MainContent from "../../components/Home/MainContent";
+import Background from "./Background";
 import cardContent from "./HomeCardContent.yaml";
+import MainContent from "./MainContent";
 
 const imageMap = {
   "IDee_logo-Transparent.png": logo,

@@ -1,10 +1,10 @@
 import ErrorLayout from "../layouts/ErrorLayout";
 import RootLayout from "../layouts/RootLayout";
+import { AuthActions } from "../pages/Authentication/Actions";
+import LoginPage from "../pages/Authentication/Login/Login";
+import SignupPage from "../pages/Authentication/Signup/SignupPage";
 import Example from "../pages/example/Example";
 import Home from "../pages/Home/Home";
-import { AuthActions } from "../pages/LoginSignup/Actions";
-import LoginPage from "../pages/LoginSignup/Login/Login";
-import SignupPage from "../pages/LoginSignup/Signup/SignupPage";
 
 const RootRoutes = [
   {
