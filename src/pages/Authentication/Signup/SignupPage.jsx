@@ -1,125 +1,58 @@
-import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { Form, useActionData, useNavigate } from "react-router-dom";
-import { toaster } from "../../../components/ui/toaster";
-import { googleAuthenticate, sendVerificationCodeAction } from "../Actions";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthActions } from "../../../Auth/useAuthActions";
 import AuthPageContainer from "../AuthPageContainer";
 import EmailAuth from "../EmailAuth";
-import { googleSignIn } from "../FirebaseAuth";
 import GoogleAuth from "../GoogleAuth";
-import PinModal from "./PinModal";
 
 const SignupPage = () => {
+  const { signUpWithEmail, authenticateWithGoogle, wrapToaster } =
+    useAuthActions();
+
   const navigate = useNavigate();
-  const [isGoogleLoginLoading, setIsGoogleLoginLoading] = useState(false);
-  const emailAuthResult = useActionData();
-  const [isPinDialogOpen, setIsPinDialogOpen] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
 
-  const onDialogClose = () => {
-    setIsVerifying(false);
-    setIsPinDialogOpen(false);
-  };
+  const [loading, setLoading] = useState(false);
 
-  const sendEmailCode = useMutation({
-    mutationFn: async (email) => {
-      return sendVerificationCodeAction(email);
-    },
-    onMutate: () => {
-      setIsVerifying(true);
-    },
-    onSuccess: () => {
-      setIsPinDialogOpen(true);
-      toaster.create({
-        description:
-          "Verification code has been sent. Please check your email.",
-        type: "success",
-      });
-    },
-    onError: (error) => {
-      toaster.create({
-        description: error?.message || "An error has been happened",
-        type: "error",
-      });
-    },
-    onSettled: () => {
-      setIsVerifying(false);
-    },
-  });
+  const onEmailSignup = async ({ email, password }) => {
+    setLoading(true);
+    try {
+      await wrapToaster(
+        () => signUpWithEmail(email, password),
+        "Verify email sent! Please check your inbox.",
+        "Signup failed. Email may already exist."
+      );
 
-  useEffect(() => {
-    if (!emailAuthResult) return;
+      sessionStorage.setItem("pendingEmail", email);
 
-    if (emailAuthResult && emailAuthResult.success) {
-      // send verification code
-      toaster.create({
-        description: "Email and Password has been validated..",
-        type: "success",
-      });
-      sendEmailCode.mutate(emailAuthResult.email);
-    } else {
-      // Error handling
-      toaster.create({
-        description: emailAuthResult?.message || "An error has been happened",
-        type: "error",
-      });
+      navigate("/verify-email");
+    } finally {
+      setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [emailAuthResult]);
-
-  const onGoogleSignup = async () => {
-    setIsGoogleLoginLoading(true);
-
-    const processSignup = async () => {
-      const res = await googleSignIn();
-      const signup = await googleAuthenticate("signup", res);
-      if (!signup?.success) throw new Error(signup.message);
-      setIsGoogleLoginLoading(false);
-    };
-
-    toaster.promise(processSignup, {
-      success: () => {
-        navigate("/");
-
-        return { title: "Signup Success!" };
-      },
-      error: (err) => {
-        return {
-          title: "Signup Failed!",
-          description: err?.message || "An error occurred during singup.",
-        };
-      },
-      loading: {
-        title: "Signing up...",
-      },
-    });
   };
 
-  const onEmailAuthSignup = (success) => {
-    console.log(success);
-
-    console.log(emailAuthResult.email, emailAuthResult.password);
+  const onGoogle = () => {
+    setLoading(true);
+    try {
+      wrapToaster(
+        () => authenticateWithGoogle(),
+        "Google Signup successful",
+        "Google Signup failed"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
       <AuthPageContainer>
-        <Form method="POST">
-          <EmailAuth
-            title="Sign up with Email"
-            action="sign up"
-            isLoading={isPinDialogOpen || isVerifying}
-          />
-        </Form>
-        <GoogleAuth onClick={onGoogleSignup} isLoading={isGoogleLoginLoading} />
+        <EmailAuth
+          title="Sign up with Email"
+          onSubmit={onEmailSignup}
+          loading={loading}
+        />
+        <GoogleAuth onClick={onGoogle} loading={loading} />
       </AuthPageContainer>
-
-      <PinModal
-        isOpen={isPinDialogOpen}
-        onClose={onDialogClose}
-        email={emailAuthResult?.email}
-        onComplete={onEmailAuthSignup}
-      />
     </>
   );
 };

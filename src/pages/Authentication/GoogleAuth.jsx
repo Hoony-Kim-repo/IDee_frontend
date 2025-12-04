@@ -1,13 +1,13 @@
 import { Button, Image, Text } from "@chakra-ui/react";
 
-const GoogleAuth = ({ onClick, isLoading }) => {
+const GoogleAuth = ({ onClick, loading }) => {
   return (
     <Button
       borderRadius={"24px"}
       w="100%"
       mt={"10px"}
       onClick={onClick}
-      disabled={isLoading}
+      disabled={loading}
     >
       <Image
         boxSize={"30px"}

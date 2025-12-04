@@ -1,10 +1,12 @@
 import ErrorLayout from "../layouts/ErrorLayout";
 import RootLayout from "../layouts/RootLayout";
-import { AuthActions } from "../pages/Authentication/Actions";
 import LoginPage from "../pages/Authentication/Login/Login";
 import SignupPage from "../pages/Authentication/Signup/SignupPage";
+import EmailVerificationCompletedPage from "../pages/Authentication/VerificationCompleted/EmailVerificationCompletedPage";
+import VerifyEmailPage from "../pages/Authentication/VerifyEmail/VerifyEmailPage";
 import Example from "../pages/example/Example";
 import Home from "../pages/Home/Home";
+import { requireAuth } from "./routeGuards";
 
 const RootRoutes = [
   {
@@ -23,12 +25,20 @@ const RootRoutes = [
       {
         path: "login",
         Component: LoginPage,
-        action: AuthActions,
       },
       {
         path: "Signup",
         Component: SignupPage,
-        action: AuthActions,
+      },
+      {
+        path: "verify-email",
+        Component: VerifyEmailPage,
+        // loader: requireAuth,
+      },
+      {
+        path: "email-verification-completed",
+        Component: EmailVerificationCompletedPage,
+        loader: requireAuth,
       },
     ],
   },
