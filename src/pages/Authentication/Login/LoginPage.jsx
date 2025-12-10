@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthActions } from "../../../Auth";
+import { useAuth } from "../../../hooks/useAuth";
 import AuthPageContainer from "../AuthPageContainer";
 import AuthWaysDivider from "../AuthWaysDivider";
 import EmailAuthLogin from "../EmailAuth.Login";
@@ -11,8 +12,12 @@ const LoginPage = () => {
     useAuthActions();
 
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
+  const { user, loading: userLoading } = useAuth();
+
+  useEffect(() => {
+    if (!userLoading && user) navigate("/");
+  }, [user, navigate, userLoading]);
 
   const onEmailLogin = async ({ email, password }) => {
     setLoading(true);

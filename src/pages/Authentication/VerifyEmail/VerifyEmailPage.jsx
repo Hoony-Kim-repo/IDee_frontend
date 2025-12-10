@@ -23,6 +23,10 @@ const VerifyEmailPage = () => {
   const cooldownRef = useRef(null);
 
   useEffect(() => {
+    if (!loading && user) navigate("/");
+  }, [user, navigate, loading]);
+
+  useEffect(() => {
     if (!pendingEmail) {
       navigate("/auth/login");
       return;

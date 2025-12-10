@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import LoginPage from "../pages/Authentication/Login/LoginPage";
 import SignupPage from "../pages/Authentication/Signup/SignupPage";
 import EmailVerificationCompletedPage from "../pages/Authentication/VerificationCompleted/EmailVerificationCompletedPage";
@@ -8,6 +9,10 @@ const AuthRoutes = [
   {
     path: "auth",
     children: [
+      {
+        index: true,
+        element: <Navigate to={"login"} replace />,
+      },
       {
         path: "login",
         Component: LoginPage,
