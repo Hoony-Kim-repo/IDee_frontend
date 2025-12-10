@@ -24,7 +24,7 @@ const VerifyEmailPage = () => {
 
   useEffect(() => {
     if (!pendingEmail) {
-      navigate("/login");
+      navigate("/auth/login");
       return;
     }
   }, [pendingEmail, navigate]);
@@ -33,7 +33,7 @@ const VerifyEmailPage = () => {
     if (loading) return;
     if (!user) {
       // If not signed in (rare immediately after signup due to timing), redirect to Login
-      navigate("/login");
+      navigate("/auth/login");
       return;
     }
 
@@ -61,7 +61,7 @@ const VerifyEmailPage = () => {
 
   const onResend = async () => {
     if (!user) {
-      navigate("/login");
+      navigate("/auth/login");
       return;
     }
 
@@ -106,7 +106,7 @@ const VerifyEmailPage = () => {
 
   const onVerifyCheck = async () => {
     if (!user) {
-      navigate("/login");
+      navigate("/auth/login");
       return;
     }
 
@@ -134,7 +134,7 @@ const VerifyEmailPage = () => {
 
         // Sign out to ensure fresh Login flow
         await auth.signOut();
-        navigate("/login");
+        navigate("/auth/login");
       } else {
         toaster.create({
           title: "Not verified yet.",

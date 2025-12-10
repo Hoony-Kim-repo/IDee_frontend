@@ -18,6 +18,7 @@ const EmailVerificationCompletedPage = () => {
   const { applyActionCodeAndReturn } = useAuthActions();
 
   useEffect(() => {
+    console.log("useEffect 1");
     const doApply = async () => {
       if (mode !== "verifyEmail" || !oobCode) {
         setStatus("error");
@@ -38,6 +39,7 @@ const EmailVerificationCompletedPage = () => {
   }, [mode, oobCode]);
 
   useEffect(() => {
+    console.log("useEffect 2");
     if (status === "success" || status === "error") {
       const interval = setInterval(() => {
         setCountdown((prev) => {

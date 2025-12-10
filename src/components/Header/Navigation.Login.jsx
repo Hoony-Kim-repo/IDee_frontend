@@ -21,10 +21,10 @@ const LoginNavigation = () => {
 
   return !isAuthenticated ? (
     <>
-      <NavLink to={"/login"}>
+      <NavLink to={"/auth/login"}>
         <Text fontWeight={"bold"}>Login</Text>
       </NavLink>
-      <NavLink to={"/signup"}>
+      <NavLink to={"/auth/signup"}>
         <Text fontWeight={"bold"}>Sign Up</Text>
       </NavLink>
     </>

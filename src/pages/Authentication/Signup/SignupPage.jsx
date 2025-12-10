@@ -25,7 +25,7 @@ const SignupPage = () => {
 
       sessionStorage.setItem("pendingEmail", email);
 
-      navigate("/verify-email");
+      navigate("/auth/verify-email");
     } finally {
       setLoading(false);
     }

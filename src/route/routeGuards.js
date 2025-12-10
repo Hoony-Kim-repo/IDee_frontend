@@ -4,7 +4,8 @@ import { auth } from "../Firebase";
 const requireAuth = async () => {
   const user = auth.currentUser;
 
-  if (!user) throw redirect({ status: 302, headers: { Location: "/login" } });
+  if (!user)
+    throw redirect({ status: 302, headers: { Location: "/auth/login" } });
 
   return user;
 };
@@ -12,7 +13,8 @@ const requireAuth = async () => {
 const requireVerified = async () => {
   const user = auth.currentUser;
 
-  if (!user) throw redirect({ status: 302, headers: { Location: "/login" } });
+  if (!user)
+    throw redirect({ status: 302, headers: { Location: "/auth/login" } });
 
   if (!user.emailVerified)
     throw redirect({ status: 302, headers: { Location: "/verify-email" } });
