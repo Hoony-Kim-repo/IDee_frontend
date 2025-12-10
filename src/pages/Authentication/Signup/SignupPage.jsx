@@ -41,7 +41,7 @@ const SignupPage = () => {
       );
     } finally {
       setLoading(false);
-      navigate("/login");
+      navigate("/");
     }
   };
 

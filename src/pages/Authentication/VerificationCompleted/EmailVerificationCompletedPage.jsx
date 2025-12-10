@@ -1,3 +1,6 @@
+/*
+This Component will be used once the app is deployed
+*/
 import { Button, Fieldset, Spinner, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";

@@ -27,7 +27,7 @@ const RootRoutes = [
         Component: LoginPage,
       },
       {
-        path: "Signup",
+        path: "signup",
         Component: SignupPage,
       },
       {

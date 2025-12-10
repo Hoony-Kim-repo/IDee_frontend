@@ -30,8 +30,6 @@ const VerifyEmailPage = () => {
   }, [pendingEmail, navigate]);
 
   useEffect(() => {
-    console.log(user);
-
     if (loading) return;
     if (!user) {
       // If not signed in (rare immediately after signup due to timing), redirect to Login

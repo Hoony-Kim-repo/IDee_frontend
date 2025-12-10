@@ -71,7 +71,7 @@ const useAuthActions = () => {
     // Send verification email
     await sendEmailVerification(user, {
       url:
-        import.meta.env.VITE_EMAIL_VERIFY_URL ||
+        import.meta.env.VITE_EMAIL_VERIFY_COMPLETE_URL ||
         `${window.location.origin}/email-verification-completed`,
     });
 
@@ -94,7 +94,7 @@ const useAuthActions = () => {
       // Re-send verification email
       await sendEmailVerification(user, {
         url:
-          import.meta.env.VITE_EMAIL_VERIFY_URL ||
+          import.meta.env.VITE_EMAIL_VERIFY_COMPLETE_URL ||
           `${window.location.origin}/email-verification-completed`,
       });
 
