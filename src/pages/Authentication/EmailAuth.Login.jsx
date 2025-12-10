@@ -43,6 +43,10 @@ const EmailAuthLogin = ({ onSubmit, loading }) => {
     try {
       await onSubmit({ email, password: pwd });
     } catch (err) {
+      if (err.message.includes("invalid-credential")) {
+        setErrors((prev) => ({ ...prev, form: "Invalid email or password." }));
+        return;
+      }
       setErrors((prev) => ({ ...prev, form: err.message }));
     }
   };

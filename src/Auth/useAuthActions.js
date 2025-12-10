@@ -141,9 +141,9 @@ const useAuthActions = () => {
     const promise = promiseFn();
     toaster.promise(() => promise, {
       success: () => ({ title: successText }),
-      error: (err) => ({
+      error: () => ({
         title: failText,
-        description: err?.message || "Something went wrong.",
+        // description: err?.message || "Something went wrong.",
       }),
       loading: { title: "Processing..." },
     });
