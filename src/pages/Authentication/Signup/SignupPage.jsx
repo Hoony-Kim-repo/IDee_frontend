@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthActions } from "../../../Auth/useAuthActions";
 import AuthPageContainer from "../AuthPageContainer";
-import EmailAuth from "../EmailAuth";
+import AuthWaysDivider from "../AuthWaysDivider";
+import EmailAuthSignup from "../EmailAuth.Signup";
 import GoogleAuth from "../GoogleAuth";
 
 const SignupPage = () => {
@@ -30,27 +31,25 @@ const SignupPage = () => {
     }
   };
 
-  const onGoogle = () => {
+  const onGoogle = async () => {
     setLoading(true);
     try {
-      wrapToaster(
+      await wrapToaster(
         () => authenticateWithGoogle(),
         "Google Signup successful",
         "Google Signup failed"
       );
     } finally {
       setLoading(false);
+      navigate("/login");
     }
   };
 
   return (
     <>
       <AuthPageContainer>
-        <EmailAuth
-          title="Sign up with Email"
-          onSubmit={onEmailSignup}
-          loading={loading}
-        />
+        <EmailAuthSignup onSubmit={onEmailSignup} loading={loading} />
+        <AuthWaysDivider />
         <GoogleAuth onClick={onGoogle} loading={loading} />
       </AuthPageContainer>
     </>

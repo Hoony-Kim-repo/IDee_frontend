@@ -1,6 +1,6 @@
 import ErrorLayout from "../layouts/ErrorLayout";
 import RootLayout from "../layouts/RootLayout";
-import LoginPage from "../pages/Authentication/Login/Login";
+import LoginPage from "../pages/Authentication/Login/LoginPage";
 import SignupPage from "../pages/Authentication/Signup/SignupPage";
 import EmailVerificationCompletedPage from "../pages/Authentication/VerificationCompleted/EmailVerificationCompletedPage";
 import VerifyEmailPage from "../pages/Authentication/VerifyEmail/VerifyEmailPage";
