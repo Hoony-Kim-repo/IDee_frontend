@@ -1,31 +1,35 @@
-import { Box, Image } from "@chakra-ui/react";
+import { HStack, Image } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/IDee_logo-Transparent.png";
+import { useAuth } from "../../hooks/useAuth";
 import ToggleModeSwitch from "../common/ToggleModeSwitch";
 import Navigation from "./Navigation";
 
 const Header = () => {
+  const { user } = useAuth();
+
+  const onClick = () => {
+    if (user) {
+      console.log(user);
+    }
+  };
+
   return (
-    <Box
-      as="header"
-      bg="surface"
-      color="text"
+    <HStack
       p={4}
       paddingLeft={16}
       paddingRight={16}
-      display={"flex"}
       justifyContent={"space-between"}
-      alignItems={"center"}
     >
-      <NavLink to="/">
+      <NavLink to="/" onClick={onClick}>
         <Image boxSize={"60px"} src={logo} />
       </NavLink>
 
-      <Box display={"flex"}>
+      <HStack gap={4}>
         <Navigation />
         <ToggleModeSwitch />
-      </Box>
-    </Box>
+      </HStack>
+    </HStack>
   );
 };
 

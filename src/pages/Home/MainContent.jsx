@@ -1,6 +1,6 @@
 import { Box, Container, Grid, Image } from "@chakra-ui/react";
 import logo from "../../assets/IDee_logo-Transparent.png";
-import TextSeparator from "../common/TextSeparator";
+import TextSeparator from "../../components/common/TextSeparator";
 
 const textSeparater = ["Create", "Your", "Custom", "Online ID"];
 
