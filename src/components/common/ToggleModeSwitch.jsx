@@ -11,14 +11,21 @@ const ToggleModeSwitch = () => {
 
   if (!mounted) return null;
 
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+  const isDark = theme === "dark";
+
+  const toggleTheme = (value) => {
+    setTheme(value.checked ? "dark" : "light");
   };
 
   return (
-    <Switch.Root colorPalette={"blue"} size="lg">
+    <Switch.Root
+      checked={isDark}
+      onCheckedChange={toggleTheme}
+      colorPalette={"blue"}
+      size="lg"
+    >
       <Switch.HiddenInput />
-      <Switch.Control onClick={toggleTheme}>
+      <Switch.Control>
         <Switch.Thumb />
         <Switch.Indicator fallback={<Icon as={FaMoon} color={"gray.400"} />}>
           <Icon as={FaSun} color={"yellow.400"} />

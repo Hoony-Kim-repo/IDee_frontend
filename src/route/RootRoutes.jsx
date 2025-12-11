@@ -3,6 +3,7 @@ import RootLayout from "../layouts/RootLayout";
 import Example from "../pages/example/Example";
 import Home from "../pages/Home/Home";
 import AuthRoutes from "./AuthRoutes";
+import DashboardRoutes from "./DashboardRoutes";
 
 const RootRoutes = [
   {
@@ -19,6 +20,7 @@ const RootRoutes = [
         Component: Example,
       },
       ...AuthRoutes,
+      ...DashboardRoutes,
     ],
   },
 ];
