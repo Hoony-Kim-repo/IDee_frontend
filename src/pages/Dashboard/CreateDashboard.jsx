@@ -1,23 +1,17 @@
-import { Box, Heading, useToken, VStack } from "@chakra-ui/react";
+import { Box, Heading, VStack } from "@chakra-ui/react";
 
 const CreateDashboard = () => {
-  const [dashboardHeroStart, dashboardHeroEnd] = useToken("colors", [
-    "dashboardHeroStart",
-    "dashboardHeroEnd",
-  ]);
-
   return (
     <Box
       backgroundGradient={"to-r"}
-      gradientFrom={dashboardHeroStart}
-      gradientTo={dashboardHeroEnd}
+      gradientFrom={"dashboardHeroStart"}
+      gradientTo={"dashboardHeroEnd"}
       minH={"100rem"}
       py={"20"}
       px={"6"}
-      // color="white"
     >
       <Box
-        bg={"dashboardCardBg"}
+        backgroundColor={"dashboardCardBg"}
         borderRadius={"2xl"}
         p={"10"}
         maxW={"100%"}
