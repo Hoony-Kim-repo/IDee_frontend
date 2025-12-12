@@ -1,6 +1,7 @@
-import { Button, Fieldset, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Fieldset, Text, VStack } from "@chakra-ui/react";
 import { passwordStrength } from "check-password-strength";
 import { useState } from "react";
+import SubmitButton from "../../components/common/SubmitButton";
 import { PasswordStrengthMeter } from "../../components/ui/password-input";
 import { InfoTip } from "../../components/ui/toggle-tip";
 import EmailAuthField from "./EmailAuth.public";
@@ -119,18 +120,13 @@ const EmailAuthSignup = ({ onSubmit, loading }) => {
               </Text>
             )}
 
-            <Button
+            <SubmitButton
               borderRadius={"24px"}
-              disabled={strength < 3}
-              justifyContent={"center"}
-              type="submit"
+              disabledCondition={strength < 3}
+              loading={loading}
             >
-              {loading ? (
-                <Spinner size="lg" borderWidth={"4px"} />
-              ) : (
-                <Text textStyle={"lg"}>Sign Up</Text>
-              )}
-            </Button>
+              Sign up
+            </SubmitButton>
           </Fieldset.Content>
         </VStack>
       </Fieldset.Root>

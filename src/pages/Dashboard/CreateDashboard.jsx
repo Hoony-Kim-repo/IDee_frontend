@@ -1,20 +1,13 @@
-import {
-  Box,
-  Button,
-  Field,
-  Fieldset,
-  FileUpload,
-  Grid,
-  Heading,
-  Input,
-  Spinner,
-  Text,
-  Textarea,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Fieldset, Grid, Heading, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { LuFileImage } from "react-icons/lu";
-import FileUploadPreview from "../../components/dashboard/FileUploadPreview";
+
+import SubmitButton from "../../components/common/SubmitButton";
+import BioField from "../../components/dashboard/Field.Bio";
+import DateOfBirthField from "../../components/dashboard/Field.DOB";
+import FullNameField from "../../components/dashboard/Field.FullName";
+import NicknameField from "../../components/dashboard/Field.Nickname";
+import PhoneNumberField from "../../components/dashboard/Field.PhoneNumber";
+import ProfilePictureField from "../../components/dashboard/Field.ProfilePicture";
 
 const CreateDashboard = () => {
   const [errors, setErrors] = useState({ name: "" });
@@ -28,6 +21,11 @@ const CreateDashboard = () => {
 
     const formData = new FormData(e.currentTarget);
     const fullName = formData.get("fullName")?.trim();
+    // const nickname = formData.get("nickname")?.trim();
+    // const phoneNumber = formData.get("phoneNumber")?.trim();
+    // const dob = formData.get("dob");
+    // const bio = formData.get("bio")?.trim();
+    // const profilePicture = formData.get("profilePicture");
 
     let hasError = false;
     const newErrors = {};
@@ -71,102 +69,37 @@ const CreateDashboard = () => {
             <Fieldset.Root>
               <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
                 <Fieldset.Content>
-                  <Field.Root required>
-                    <Field.Label>
-                      Full Name <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input
-                      id="fullName"
-                      name="fullName"
-                      type="text"
-                      placeholder="Enter your full name"
-                      borderRadius="lg"
-                    />
-                    <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-                  </Field.Root>
+                  <FullNameField errors={errors} />
                 </Fieldset.Content>
 
                 <Fieldset.Content>
-                  <Field.Root>
-                    <Field.Label>Nickname (Preferred Name)</Field.Label>
-                    <Input
-                      id="nickname"
-                      name="nickname"
-                      type="text"
-                      placeholder="Enter your nickname"
-                      borderRadius="lg"
-                    />
-                  </Field.Root>
+                  <NicknameField />
                 </Fieldset.Content>
 
                 <Fieldset.Content>
-                  <Field.Root>
-                    <Field.Label>Phone Number</Field.Label>
-                    <Input
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      type="tel"
-                      placeholder="Enter your Phone Number"
-                      borderRadius="lg"
-                    />
-                  </Field.Root>
+                  <PhoneNumberField />
                 </Fieldset.Content>
 
                 <Fieldset.Content>
-                  <Field.Root>
-                    <Field.Label>Date of Birth</Field.Label>
-                    <Input
-                      id="dob"
-                      name="dob"
-                      type="date"
-                      placeholder="Enter your Date of Birth"
-                      borderRadius="lg"
-                    />
-                  </Field.Root>
+                  <DateOfBirthField />
                 </Fieldset.Content>
 
                 <Fieldset.Content>
-                  <Field.Root>
-                    <Field.Label>Profile Picture</Field.Label>
-                    <FileUpload.Root>
-                      <FileUpload.HiddenInput name="profilePicture" />
-                      <FileUpload.Trigger asChild>
-                        <Button as={"div"} variant="solid" borderRadius="lg">
-                          <LuFileImage /> Upload Profile Picture
-                        </Button>
-                      </FileUpload.Trigger>
-                      <FileUploadPreview />
-                    </FileUpload.Root>
-                  </Field.Root>
+                  <ProfilePictureField />
                 </Fieldset.Content>
 
                 <Fieldset.Content gridColumn={{ base: "span 1", md: "span 2" }}>
-                  <Field.Root>
-                    <Field.Label>Bio</Field.Label>
-                    <Textarea
-                      id="bio"
-                      name="bio"
-                      placeholder="I am..."
-                      borderRadius={"lg"}
-                    />
-                    <Field.HelperText>
-                      A short description of yourself
-                    </Field.HelperText>
-                  </Field.Root>
+                  <BioField />
                 </Fieldset.Content>
 
                 <Fieldset.Content gridColumn={{ base: "span 1", md: "span 2" }}>
-                  <Button
+                  <SubmitButton
                     borderRadius={"lg"}
-                    disabled={errors.name === ""}
-                    type="submit"
+                    disabledCondition={loading}
+                    loading={loading}
                   >
-                    {loading ? (
-                      <Spinner size="lg" borderWidth={"4px"} />
-                    ) : (
-                      <Text textStyle={"lg"}>Create Profile</Text>
-                    )}
-                  </Button>
+                    Create Profile
+                  </SubmitButton>
                 </Fieldset.Content>
               </Grid>
             </Fieldset.Root>

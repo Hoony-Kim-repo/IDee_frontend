@@ -1,5 +1,6 @@
-import { Button, Fieldset, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Fieldset, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
+import SubmitButton from "../../components/common/SubmitButton";
 import EmailAuthField from "./EmailAuth.public";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -84,18 +85,9 @@ const EmailAuthLogin = ({ onSubmit, loading }) => {
               </Text>
             )}
 
-            <Button
-              borderRadius={"24px"}
-              //   disabled={strength < 3}
-              justifyContent={"center"}
-              type="submit"
-            >
-              {loading ? (
-                <Spinner size="lg" borderWidth={"4px"} />
-              ) : (
-                <Text textStyle={"lg"}>Login</Text>
-              )}
-            </Button>
+            <SubmitButton borderRadius={"24px"} loading={loading}>
+              Login
+            </SubmitButton>
           </Fieldset.Content>
         </VStack>
       </Fieldset.Root>
