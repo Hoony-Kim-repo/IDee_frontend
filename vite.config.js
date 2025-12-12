@@ -26,6 +26,9 @@ export default ({ mode }) => {
             }
           : undefined,
     },
+    build: {
+      sourcemap: true,
+    },
     optimizeDeps: {
       include: ["@chakra-ui/react", "@emotion/react", "@emotion/styled"],
     },

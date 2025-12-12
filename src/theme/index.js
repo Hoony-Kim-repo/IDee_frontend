@@ -73,7 +73,7 @@ const config = defineConfig({
           value: { base: "{colors.brand.200}", _dark: "{colors.brand.400}" },
         },
         dashboardHeroEnd: {
-          value: { base: "{colors.brand.100}", _dark: "{colors.brand.300}" },
+          value: { base: "rgba(255,255,255, 0.8)", _dark: "rgba(0,0,0,0.8)" },
         },
         dashboardCardBg: {
           value: { base: "rgba(255,255,255, 0.8)", _dark: "rgba(0,0,0,0.8)" },
