@@ -1,6 +1,7 @@
 import { Box, Fieldset, Grid, Heading, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
+import axios from "axios";
 import SubmitButton from "../../components/common/SubmitButton";
 import BioField from "../../components/dashboard/Field.Bio";
 import DateOfBirthField from "../../components/dashboard/Field.DOB";
@@ -13,7 +14,7 @@ const CreateDashboard = () => {
   const [errors, setErrors] = useState({ name: "" });
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -21,11 +22,6 @@ const CreateDashboard = () => {
 
     const formData = new FormData(e.currentTarget);
     const fullName = formData.get("fullName")?.trim();
-    // const nickname = formData.get("nickname")?.trim();
-    // const phoneNumber = formData.get("phoneNumber")?.trim();
-    // const dob = formData.get("dob");
-    // const bio = formData.get("bio")?.trim();
-    // const profilePicture = formData.get("profilePicture");
 
     let hasError = false;
     const newErrors = {};
@@ -40,7 +36,27 @@ const CreateDashboard = () => {
       return;
     }
 
-    setLoading(false);
+    console.log(import.meta.env.VITE_BACKEND_URL);
+
+    try {
+      const response = await axios.post(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/profile/test-upload` /*/api/profile/create-profile"*/,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Upload response", response);
+      alert(`Upload success! Image URL: ${response.data.image_url}`);
+    } catch (err) {
+      console.error("Upload error", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

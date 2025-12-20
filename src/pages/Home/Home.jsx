@@ -31,7 +31,7 @@ const Home = () => {
                 <Image
                   src={imageMap[content.img]}
                   alt={content.imgAlt}
-                  boxSize={"150px"}
+                  boxSize={"10rem"}
                   w={"100%"}
                   objectFit={"contain"}
                 />
