@@ -10,7 +10,7 @@ const SubmitButton = ({
   return (
     <Button
       borderRadius={borderRadius}
-      disabled={disabledCondition}
+      disabled={disabledCondition || loading}
       type="submit"
       {...props}
     >
