@@ -42,10 +42,7 @@ const CreateDashboard = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/profile`,
-        formData
-      );
+      const response = await axios.post("/profile", formData);
 
       if (response.status === 200) {
         console.log("Profile created successfully", response.data);
