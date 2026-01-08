@@ -2,15 +2,23 @@ import { HStack, Image } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/IDee_logo-Transparent.png";
 import { useAuth } from "../../hooks/useAuth";
+import { useProfile } from "../../hooks/useProfile";
 import ToggleModeSwitch from "../common/ToggleModeSwitch";
 import Navigation from "./Navigation";
 
 const Header = () => {
   const { user } = useAuth();
+  const { profile } = useProfile();
 
   const onClick = () => {
     if (user) {
       console.log(user);
+    }
+
+    if (profile) {
+      console.log(profile);
+    } else {
+      console.log("No Profile");
     }
   };
 

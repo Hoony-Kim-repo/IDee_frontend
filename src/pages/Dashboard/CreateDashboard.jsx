@@ -9,13 +9,10 @@ import FullNameField from "../../components/dashboard/Field.FullName";
 import NicknameField from "../../components/dashboard/Field.Nickname";
 import PhoneNumberField from "../../components/dashboard/Field.PhoneNumber";
 import ProfilePictureField from "../../components/dashboard/Field.ProfilePicture";
-import { useAuth } from "../../hooks/useAuth";
 
 const CreateDashboard = () => {
   const [errors, setErrors] = useState({ name: "" });
   const [loading, setLoading] = useState(false);
-
-  const { user } = useAuth();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -25,8 +22,6 @@ const CreateDashboard = () => {
 
     const formData = new FormData(e.currentTarget);
     const fullName = formData.get("fullName")?.trim();
-
-    formData.append("uid", user.uid);
 
     let hasError = false;
     const newErrors = {};
