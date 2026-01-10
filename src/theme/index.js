@@ -17,6 +17,18 @@ const config = defineConfig({
           800: "#7a3dbf",
           900: "#602a99",
         },
+        menuHighlight: {
+          50: "#fff5f0",
+          100: "#ffe6d9",
+          200: "#ffcdb3",
+          300: "#ffb38c",
+          400: "#ff9966",
+          500: "#ff7f40",
+          600: "#e66b33",
+          700: "#bf5526",
+          800: "#993d1a",
+          900: "#73290f",
+        },
         white: {
           50: "#ffffff",
           100: "#fefefe",
@@ -77,6 +89,20 @@ const config = defineConfig({
         },
         dashboardCardBg: {
           value: { base: "rgba(255,255,255, 0.8)", _dark: "rgba(0,0,0,0.8)" },
+        },
+
+        avatarMenuItemHighlight: {
+          value: {
+            base: "{colors.menuHighlight.200}",
+            _dark: "{colors.menuHighlight.400}",
+          },
+        },
+
+        avatarMenuItemHighlightError: {
+          value: {
+            base: "rgba(255, 126, 126, 1)",
+            _dark: "rgba(186, 121, 121, 0.8)",
+          },
         },
       },
     },
