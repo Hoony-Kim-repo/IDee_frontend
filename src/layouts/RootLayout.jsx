@@ -1,12 +1,15 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import { Toaster } from "../components/ui/toaster";
+import PostLoginGate from "../route/PostLoginGate";
 
 const RootLayout = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <PostLoginGate>
+        <Outlet />
+      </PostLoginGate>
       <Toaster />
     </>
   );

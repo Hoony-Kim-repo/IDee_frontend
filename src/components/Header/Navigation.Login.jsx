@@ -1,27 +1,12 @@
-import { Button, Text } from "@chakra-ui/react";
-import { useQueryClient } from "@tanstack/react-query";
-import { signOut } from "firebase/auth";
-import { NavLink, useNavigate } from "react-router-dom";
-import { auth } from "../../Firebase";
+import { Text } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import UserAvatar from "./UserAvatar";
 
 const LoginNavigation = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const isAuthenticated = !!user && user.emailVerified;
-
-  const onLogout = async () => {
-    try {
-      await signOut(auth);
-
-      queryClient.clear();
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   return !isAuthenticated ? (
     <>
@@ -33,9 +18,7 @@ const LoginNavigation = () => {
       </NavLink>
     </>
   ) : (
-    <Button variant="ghost" onClick={onLogout}>
-      <Text fontWeight={"bold"}>Logout</Text>
-    </Button>
+    <UserAvatar />
   );
 };
 

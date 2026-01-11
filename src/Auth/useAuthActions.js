@@ -10,6 +10,7 @@ import {
   sendEmailVerification,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db, googleProvider } from "../Firebase";
@@ -133,6 +134,15 @@ const useAuthActions = () => {
     return true;
   };
 
+  /**
+   * Fully Logs out the user from the application.
+   * - Firebase Auth Sign out
+   * - No UI or cache Logic here (separation of concerns);
+   */
+  const logout = async () => {
+    await signOut(auth);
+  };
+
   /*
    * wrapToaster - expects a function that returns a promise.
    * Returns the promise so callers can await it.
@@ -157,6 +167,7 @@ const useAuthActions = () => {
     authenticateWithGoogle,
     createOrUpdateUserDocIfVerified,
     applyActionCodeAndReturn,
+    logout,
     wrapToaster,
   };
 };

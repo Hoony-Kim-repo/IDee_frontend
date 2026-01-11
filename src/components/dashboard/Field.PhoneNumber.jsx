@@ -3,7 +3,7 @@ import { Field, Input } from "@chakra-ui/react";
 const PhoneNumberField = () => {
   return (
     <Field.Root>
-      <Field.Label>Phone Number</Field.Label>
+      <Field.Label>Phone Number (without '-')</Field.Label>
       <Input
         id="phoneNumber"
         name="phoneNumber"

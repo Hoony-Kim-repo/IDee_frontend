@@ -10,7 +10,8 @@
     - No UI logic beyond loading state.
 */
 
-import { Navigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import FullScreenLoader from "../components/system/FullScreenLoader";
 import { useAuth } from "../hooks/useAuth";
 import { useProfile } from "../hooks/useProfile";
@@ -19,20 +20,27 @@ const AuthGate = ({ children }) => {
   const { user, loading: authLoading } = useAuth();
   const {
     isLoading: profileLoading,
-    isError: profileError,
+    // isError: profileError,
     profile,
   } = useProfile();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authLoading || profileLoading) return;
+
+    if (!user) {
+      navigate("/auth/login", { replace: true });
+      return;
+    }
+
+    if (!profile) {
+      navigate("/dashboard/create", { replace: true });
+      return;
+    }
+  }, [user, profile, authLoading, profileLoading, navigate]);
 
   if (authLoading || profileLoading) {
     return <FullScreenLoader />;
-  }
-
-  if (!user) {
-    return <Navigate to={"/auth/login"} replace />;
-  }
-
-  if (!profile && !profileLoading && !profileError) {
-    return <Navigate to={"/dashboard/create"} replace />;
   }
 
   return children;

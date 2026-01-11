@@ -13,6 +13,8 @@ const Header = () => {
   const onClick = () => {
     if (user) {
       console.log(user);
+    } else {
+      console.log("No user");
     }
 
     if (profile) {

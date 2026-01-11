@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../api/client";
+import { QUERY_KEYS } from "../constants/queryKeys";
+import { api } from "../lib/axios";
 import { useAuth } from "./useAuth";
 
 /*
@@ -16,7 +17,7 @@ const useProfile = () => {
   const { user, loading: authLoading } = useAuth();
 
   const query = useQuery({
-    queryKey: ["my-profile"],
+    queryKey: QUERY_KEYS.PROFILE,
     queryFn: fetchMyProfile,
     retry: false,
     enabled: !!user && !authLoading,

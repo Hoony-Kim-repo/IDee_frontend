@@ -1,5 +1,9 @@
 import { Avatar, Menu, Portal, Separator } from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthActions } from "../../Auth";
+import { QUERY_KEYS } from "../../constants/queryKeys";
 import { useAuth } from "../../hooks/useAuth";
 import { useProfile } from "../../hooks/useProfile";
 import MenuItem from "../common/MenuItem";
@@ -7,8 +11,12 @@ import MenuItem from "../common/MenuItem";
 const UserAvatar = () => {
   const { user } = useAuth();
   const { data: profile } = useProfile();
+  const { logout } = useAuthActions();
 
   const ref = useRef(null);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const getAnchorRect = () => ref.current.getBoundingClientRect();
 
   const imageSrc = profile?.profileImage?.url;
@@ -18,6 +26,20 @@ const UserAvatar = () => {
   if (!user) {
     return null;
   }
+
+  const onUserLogout = async () => {
+    try {
+      await logout();
+
+      // Remove all user-related cached data
+      queryClient.removeQueries({ queryKey: QUERY_KEYS.PROFILE });
+      queryClient.removeQueries({ queryKey: QUERY_KEYS.USER });
+
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
 
   return (
     <Menu.Root positioning={{ getAnchorRect }} size={"md"}>
@@ -53,6 +75,7 @@ const UserAvatar = () => {
               highlightBg={"avatarMenuItemHighlightError"}
               color="fg.error"
               cursor={"pointer"}
+              onClick={onUserLogout}
             >
               Log out
             </MenuItem>

@@ -1,7 +1,9 @@
 import { Box, Fieldset, Grid, Heading, VStack } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { createProfile } from "../../api/profile";
 import SubmitButton from "../../components/common/SubmitButton";
 import BioField from "../../components/dashboard/Field.Bio";
 import DateOfBirthField from "../../components/dashboard/Field.DOB";
@@ -9,10 +11,23 @@ import FullNameField from "../../components/dashboard/Field.FullName";
 import NicknameField from "../../components/dashboard/Field.Nickname";
 import PhoneNumberField from "../../components/dashboard/Field.PhoneNumber";
 import ProfilePictureField from "../../components/dashboard/Field.ProfilePicture";
+import { QUERY_KEYS } from "../../constants/queryKeys";
 
 const CreateDashboard = () => {
   const [errors, setErrors] = useState({ name: "" });
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: createProfile,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROFILE });
+
+      navigate("/", { replace: true });
+    },
+  });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -37,13 +52,7 @@ const CreateDashboard = () => {
     }
 
     try {
-      const response = await axios.post("/profile", formData);
-
-      if (response.status === 200) {
-        console.log("Profile created successfully", response.data);
-      } else {
-        console.error("Profile creation failed", response.data);
-      }
+      await mutateAsync(formData);
     } catch (err) {
       console.error("Upload error", err);
     } finally {
@@ -103,7 +112,7 @@ const CreateDashboard = () => {
                 <Fieldset.Content gridColumn={{ base: "span 1", md: "span 2" }}>
                   <SubmitButton
                     borderRadius={"lg"}
-                    disabledCondition={loading}
+                    disabledCondition={loading || isPending}
                     loading={loading}
                   >
                     Create Profile
