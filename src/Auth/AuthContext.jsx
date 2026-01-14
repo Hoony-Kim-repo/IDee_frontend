@@ -1,9 +1,10 @@
 /*
  * Subscribe only Firebase Auth status
  */
-import { onAuthStateChanged } from "firebase/auth";
+import { onIdTokenChanged } from "firebase/auth";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { auth } from "../Firebase";
+import { tokenRef } from "./tokenRef";
 
 const AuthContext = createContext({
   user: null,
@@ -14,11 +15,23 @@ const AuthContext = createContext({
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [idToken, setIdToken] = useState(null);
 
-  // onAuthStateChanged Listener
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      setUser(firebaseUser || null);
+    const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser) {
+        setUser(null);
+        setIdToken(null);
+        tokenRef.current = null;
+        setLoading(false);
+        return;
+      }
+
+      // Get token before "Render"
+      const token = await firebaseUser.getIdToken();
+      setUser(firebaseUser);
+      setIdToken(token);
+      tokenRef.current = token;
       setLoading(false);
     });
 
@@ -31,7 +44,11 @@ const AuthProvider = ({ children }) => {
 
     try {
       await auth.currentUser.reload();
+      const token = await auth.currentUser.getIdToken();
+
       setUser(auth.currentUser);
+      setIdToken(token);
+
       return auth.currentUser;
     } catch (err) {
       console.error("reloadUser error: ", err);
@@ -40,7 +57,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, reloadUser }}>
+    <AuthContext.Provider value={{ user, idToken, loading, reloadUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -21,24 +21,17 @@ const useProfile = () => {
     queryFn: fetchMyProfile,
     retry: false,
     enabled: !!user && !authLoading,
+    suspense: false,
   });
 
   const profile = query.data || null;
 
   const displayName = profile?.nickname || profile?.fullName || "Anonymous";
 
-  /*
-        Avatar logic:
-        - If image exists -> use it
-        - Else Chkra Avatar will auto-generate initials from name
-    */
-  const avatarUrl = profile?.profileImage?.url || null;
-
   return {
     ...query,
     profile,
     displayName,
-    avatarUrl,
     hasProfile: !!profile,
   };
 };

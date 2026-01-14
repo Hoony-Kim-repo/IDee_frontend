@@ -1,5 +1,5 @@
 import axios from "axios";
-import { auth } from "../Firebase";
+import { tokenRef } from "../Auth/tokenRef";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -8,10 +8,9 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   async (config) => {
-    const user = auth.currentUser;
+    const token = tokenRef.current;
 
-    if (user) {
-      const token = await user.getIdToken();
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 

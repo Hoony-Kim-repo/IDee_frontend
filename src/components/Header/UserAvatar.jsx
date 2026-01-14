@@ -1,4 +1,10 @@
-import { Avatar, Menu, Portal, Separator } from "@chakra-ui/react";
+import {
+  Avatar,
+  Menu,
+  Portal,
+  Separator,
+  SkeletonCircle,
+} from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,14 +16,15 @@ import MenuItem from "../common/MenuItem";
 
 const UserAvatar = () => {
   const { user } = useAuth();
-  const { data: profile } = useProfile();
+  const { data: profile, isLoading: isProfileLoading } = useProfile();
   const { logout } = useAuthActions();
 
   const ref = useRef(null);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const getAnchorRect = () => ref.current.getBoundingClientRect();
+  const getAnchorRect = () =>
+    ref.current ? ref.current.getBoundingClientRect() : null;
 
   const imageSrc = profile?.profileImage?.url;
 
@@ -41,6 +48,10 @@ const UserAvatar = () => {
     }
   };
 
+  if (isProfileLoading) {
+    return <SkeletonCircle size="12" border={"1px solid red"} />;
+  }
+
   return (
     <Menu.Root positioning={{ getAnchorRect }} size={"md"}>
       <Menu.Trigger rounded="full" focusRing={"outside"}>
@@ -60,6 +71,7 @@ const UserAvatar = () => {
             >
               My Dashboard
             </MenuItem>
+
             <MenuItem
               value="settings"
               highlightBg={"avatarMenuItemHighlight"}
