@@ -1,11 +1,12 @@
 import { Text } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import LoginNavigation from "./Navigation.Login";
+import AuthNavigation from "./AuthNavigation";
 
 const Navigation = () => {
   return (
     <>
-      <LoginNavigation />
+      <AuthNavigation />
+
       <NavLink to="example">
         <Text mr={4} color={"pink.400"}>
           Example

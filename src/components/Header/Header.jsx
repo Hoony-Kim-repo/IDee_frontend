@@ -1,28 +1,11 @@
 import { HStack, Image } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
 import logo from "../../assets/IDee_logo-Transparent.png";
-import { useAuth } from "../../hooks/useAuth";
-import { useProfile } from "../../hooks/useProfile";
+import { useNavigationActions } from "../../navigation/useNavigationActions";
 import ToggleModeSwitch from "../common/ToggleModeSwitch";
 import Navigation from "./Navigation";
 
 const Header = () => {
-  const { user } = useAuth();
-  const { profile } = useProfile();
-
-  const onClick = () => {
-    if (user) {
-      console.log(user);
-    } else {
-      console.log("No user");
-    }
-
-    if (profile) {
-      console.log(profile);
-    } else {
-      console.log("No Profile");
-    }
-  };
+  const { goHome } = useNavigationActions();
 
   return (
     <HStack
@@ -31,9 +14,7 @@ const Header = () => {
       paddingRight={16}
       justifyContent={"space-between"}
     >
-      <NavLink to="/" onClick={onClick}>
-        <Image boxSize={"60px"} src={logo} />
-      </NavLink>
+      <Image cursor={"pointer"} boxSize={"60px"} src={logo} onClick={goHome} />
 
       <HStack gap={4}>
         <Navigation />

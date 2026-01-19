@@ -12,11 +12,13 @@ import { useAuthActions } from "../../Auth";
 import { QUERY_KEYS } from "../../constants/queryKeys";
 import { useAuth } from "../../hooks/useAuth";
 import { useProfile } from "../../hooks/useProfile";
+import { useNavigationActions } from "../../navigation/useNavigationActions";
 import MenuItem from "../common/MenuItem";
 
 const UserAvatar = () => {
   const { user } = useAuth();
   const { data: profile, isLoading: isProfileLoading } = useProfile();
+  const { goHome, goDashboard } = useNavigationActions();
   const { logout } = useAuthActions();
 
   const ref = useRef(null);
@@ -68,6 +70,7 @@ const UserAvatar = () => {
               value="myprofile"
               highlightBg={"avatarMenuItemHighlight"}
               cursor={"pointer"}
+              onClick={goDashboard}
             >
               My Dashboard
             </MenuItem>
