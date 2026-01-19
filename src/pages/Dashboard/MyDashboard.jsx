@@ -1,5 +1,20 @@
+import { VStack } from "@chakra-ui/react";
+import DashboardHeader from "../../components/dashboard/Dashboard.Header";
+import DashboardProfileCard from "../../components/dashboard/Dashboard.ProfileCard";
+import { useProfile } from "../../hooks/useProfile";
+
 const MyDashboard = () => {
-  return <h1>My Dashboard Page</h1>;
+  const { profile } = useProfile();
+
+  console.log(profile);
+
+  return (
+    <VStack>
+      <DashboardHeader />
+
+      <DashboardProfileCard profile={profile} />
+    </VStack>
+  );
 };
 
 export default MyDashboard;

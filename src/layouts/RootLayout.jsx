@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import { Toaster } from "../components/ui/toaster";
-import PostLoginGate from "../route/PostLoginGate";
+import PostLoginGate from "../gates/PostLoginGate";
 
 const RootLayout = () => {
   return (

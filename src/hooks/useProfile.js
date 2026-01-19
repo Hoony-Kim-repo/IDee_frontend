@@ -24,15 +24,19 @@ const useProfile = () => {
     suspense: false,
   });
 
-  const profile = query.data || null;
+  const profile = query.data ?? null;
+
+  let profileStatus = "unknown";
 
   const displayName = profile?.nickname || profile?.fullName || "Anonymous";
+
+  if (query.isFetched) profileStatus = profile ? "exists" : "not_exists";
 
   return {
     ...query,
     profile,
     displayName,
-    hasProfile: !!profile,
+    profileStatus,
   };
 };
 
