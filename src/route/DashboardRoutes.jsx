@@ -4,8 +4,8 @@ import MyDashboard from "../pages/Dashboard/MyDashboard";
 
 const DashboardRoutes = [
   {
-    Component: DashboardLayout,
     path: "/dashboard",
+    Component: DashboardLayout,
     children: [
       {
         index: true,

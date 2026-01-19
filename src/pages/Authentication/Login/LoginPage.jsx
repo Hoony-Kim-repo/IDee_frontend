@@ -26,9 +26,9 @@ const LoginPage = () => {
       await wrapToaster(
         () => loginWithEmail(email, password),
         "Login successful",
-        "Login failed. Please check your credentials."
+        "Login failed. Please check your credentials.",
       );
-      navigate("/");
+      navigate("/", { replace: true, state: { fromAuth: true } });
     } finally {
       setLoading(false);
     }
@@ -40,9 +40,9 @@ const LoginPage = () => {
       await wrapToaster(
         () => authenticateWithGoogle(),
         "Google Login successful",
-        "Google Login failed"
+        "Google Login failed",
       );
-      navigate("/");
+      navigate("/", { replace: true, state: { fromAuth: true } });
     } finally {
       setLoading(false);
     }

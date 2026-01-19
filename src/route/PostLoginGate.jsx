@@ -1,27 +1,33 @@
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FullScreenLoader from "../components/system/FullScreenLoader";
-import { useAuth } from "../hooks/useAuth";
 import { useProfile } from "../hooks/useProfile";
 
+/**
+ * PostLoginGate
+ * - Handles post-login user flow
+ * Assumes authentication is already guaranteed (use AuthGate for that)
+ */
 const PostLoginGate = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { user, loading: authLoading } = useAuth();
-  const { profile, loading: profileLoading } = useProfile({
-    enabled: !!user, // fetch profile only when logged in
-  });
+  const fromAuth = location.state?.fromAuth;
 
-  if ((authLoading, profileLoading)) return <FullScreenLoader />;
+  const { profile, isLoading } = useProfile();
 
-  if (!user) {
-    return children;
-  }
+  useEffect(() => {
+    if (!fromAuth || isLoading) return;
 
-  if (location.pathname === "/")
+    // Root path logic
     if (!profile) {
-      return navigate("/dashboard/create", { replace: true });
+      navigate("/dashboard/create", { replace: true });
+    } else {
+      navigate("/dashboard", { replace: true });
     }
+  }, [fromAuth, isLoading, navigate, profile]);
+
+  if (isLoading) return <FullScreenLoader />;
 
   return children;
 };
