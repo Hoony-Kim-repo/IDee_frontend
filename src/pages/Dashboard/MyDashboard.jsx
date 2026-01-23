@@ -6,8 +6,6 @@ import { useProfile } from "../../hooks/useProfile";
 const MyDashboard = () => {
   const { profile } = useProfile();
 
-  console.log(profile);
-
   return (
     <VStack>
       <DashboardHeader />
