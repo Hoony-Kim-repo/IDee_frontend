@@ -1,4 +1,4 @@
-import IDCard from "../../components/ID/IDCard";
+import IDCard from "../../components/IDCard/IDCard";
 import ExampleBack from "./back/ExampleBack";
 import ExampleFront from "./front/ExampleFront";
 

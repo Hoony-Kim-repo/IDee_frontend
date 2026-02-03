@@ -1,7 +1,7 @@
 import { Box, DataList, Image, Text } from "@chakra-ui/react";
 import { useTheme } from "next-themes";
 import background from "../../../assets/Example/background.webp";
-import CardContainer from "../../../components/ID/CardContainer";
+import CardContainer from "../../../components/IDCard/CardContainer";
 import skills from "./Skills.json";
 
 const ExampleBack = () => {

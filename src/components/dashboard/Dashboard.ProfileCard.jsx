@@ -1,9 +1,9 @@
 import { useProfile } from "../../hooks/useProfile";
-import CardBody from "../ID/CardBody";
-import CardContainer from "../ID/CardContainer";
-import CardFooter from "../ID/CardFooter";
-import CardHeader from "../ID/CardHeader";
-import IDCard from "../ID/IDCard";
+import CardBody from "../IDCard/CardBody";
+import CardContainer from "../IDCard/CardContainer";
+import CardFooter from "../IDCard/CardFooter";
+import CardHeader from "../IDCard/CardHeader";
+import IDCard from "../IDCard/IDCard";
 
 const DashboardProfileCard = () => {
   const { profile } = useProfile();

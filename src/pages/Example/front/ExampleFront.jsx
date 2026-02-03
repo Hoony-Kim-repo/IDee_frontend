@@ -1,9 +1,9 @@
 import background from "../../../assets/Example/background.webp";
 import profileImg from "../../../assets/Example/my-profile-picture.jpg";
-import CardBody from "../../../components/ID/CardBody";
-import CardContainer from "../../../components/ID/CardContainer";
-import CardFooter from "../../../components/ID/CardFooter";
-import CardHeader from "../../../components/ID/CardHeader";
+import CardBody from "../../../components/IDCard/CardBody";
+import CardContainer from "../../../components/IDCard/CardContainer";
+import CardFooter from "../../../components/IDCard/CardFooter";
+import CardHeader from "../../../components/IDCard/CardHeader";
 
 const footerData = [
   {
