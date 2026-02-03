@@ -1,22 +1,33 @@
-import { Box, Strong, Text } from "@chakra-ui/react";
-import { useAuth } from "../../hooks/useAuth";
+import { useProfile } from "../../hooks/useProfile";
+import CardBody from "../ID/CardBody";
+import CardContainer from "../ID/CardContainer";
+import CardFooter from "../ID/CardFooter";
+import CardHeader from "../ID/CardHeader";
+import IDCard from "../ID/IDCard";
 
-const DashboardProfileCard = ({ profile }) => {
-  const { user } = useAuth();
+const DashboardProfileCard = () => {
+  const { profile } = useProfile();
 
-  return (
-    <Box borderWidth={"1px"} width={"30vh"} borderRadius={"lg"} p={"6"}>
-      <Text mb={2}>
-        <Strong>Email:</Strong> {user.email}
-      </Text>
-      <Text mb={2}>
-        <Strong>Full Name:</Strong> {profile.fullName}
-      </Text>
-      <Text>
-        <Strong>NickName:</Strong> {profile.nickname}
-      </Text>
-    </Box>
-  );
+  const front = () => {
+    return (
+      <CardContainer>
+        <CardHeader
+          name={profile?.nickname || profile?.fullName}
+          jobTitle={"Test"}
+        />
+
+        <CardBody
+          profileImage={profile?.profileImage.url}
+          list={[]}
+          bio={profile?.bio}
+        />
+
+        <CardFooter list={[]} />
+      </CardContainer>
+    );
+  };
+
+  return <IDCard front={front} back={null} />;
 };
 
 export default DashboardProfileCard;

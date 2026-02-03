@@ -1,11 +1,9 @@
-import { Container } from "@chakra-ui/react";
+import background from "../../../assets/Example/background.webp";
 import profileImg from "../../../assets/Example/my-profile-picture.jpg";
-import ExampleBackground from "../Background";
-import ID_Container from "../ID_Container";
-import ID_Body from "./ID_Body";
-import ID_Footer from "./ID_Footer";
-import ID_Header from "./ID_Header";
-
+import CardBody from "../../../components/ID/CardBody";
+import CardContainer from "../../../components/ID/CardContainer";
+import CardFooter from "../../../components/ID/CardFooter";
+import CardHeader from "../../../components/ID/CardHeader";
 
 const footerData = [
   {
@@ -18,26 +16,40 @@ const footerData = [
   },
 ];
 
+const bodyData = [
+  {
+    label: "Name",
+    value: "Gihoon Kim",
+  },
+  {
+    label: "Prefered Name",
+    value: "Hoony Kim",
+  },
+  {
+    label: "Address",
+    value: "Toronto",
+  },
+  {
+    label: "GitHub Link",
+    value: "https://github.com/Hoony-Kim-repo",
+  },
+  {
+    label: "LinkedIn Link",
+    value: "https://www.linkedin.com/in/gihoon-kim-532627196/",
+  },
+];
+
 const ExampleFront = () => {
   return (
-    <ID_Container>
-      <ExampleBackground />
-
-      <Container
-        position="relative"
-        maxW="8xl"
-        h="80vh"
-        display="flex"
-        flexDir="column"
-        p={9}
-      >
-        <ID_Header name={"Hoony Kim"} job={"Software Engineer"} />
-
-        <ID_Body profileImg={profileImg} />
-
-        <ID_Footer data={footerData} />
-      </Container>
-    </ID_Container>
+    <CardContainer bgImage={background}>
+      <CardHeader name={"Hoony Kim"} jobTitle={"Software Engineer"} />
+      <CardBody
+        profileImage={profileImg}
+        list={bodyData}
+        bio={"Hi, This is Test Bio"}
+      />
+      <CardFooter list={footerData} />
+    </CardContainer>
   );
 };
 

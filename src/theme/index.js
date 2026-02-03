@@ -104,6 +104,13 @@ const config = defineConfig({
             _dark: "rgba(186, 121, 121, 0.8)",
           },
         },
+
+        basicWhiteBlackColor: {
+          value: {
+            base: "{colors.black.900}",
+            _dark: "{colors.white.900}",
+          },
+        },
       },
     },
     styles: {

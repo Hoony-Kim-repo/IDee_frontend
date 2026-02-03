@@ -1,16 +1,14 @@
 import { Box, DataList, Image, Text } from "@chakra-ui/react";
 import { useTheme } from "next-themes";
-import ExampleBackground from "../Background";
-import ID_Container from "../ID_Container";
+import background from "../../../assets/Example/background.webp";
+import CardContainer from "../../../components/ID/CardContainer";
 import skills from "./Skills.json";
 
 const ExampleBack = () => {
   const { theme } = useTheme();
 
   return (
-    <ID_Container>
-      <ExampleBackground />
-
+    <CardContainer bgImage={background}>
       <Box
         w={"100%"}
         borderRadius="xl"
@@ -58,7 +56,7 @@ const ExampleBack = () => {
           ))}
         </DataList.Root>
       </Box>
-    </ID_Container>
+    </CardContainer>
   );
 };
 
