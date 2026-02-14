@@ -1,0 +1,59 @@
+{
+  "name": "My Professional Experiences",
+  "list": [
+    {
+      "id": "1",
+      "category": "Work History",
+      "data": [
+        {
+          "Company": "Google",
+          "Role": "Frontend Dev",
+          "Location": "Seoul",
+          "Date": "2023-2024"
+        },
+        {
+          "Company": "Meta",
+          "Role": "Junior Engineer",
+          "Location": "N.Y.",
+          "Date": "2022-2023"
+        },
+        {
+          "Company": "Startup X",
+          "Role": "Intern",
+          "Location": "Remote",
+          "Date": "2021"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "category": "Key Projects",
+      "data": [
+        {
+          "Project": "AI Chatbot",
+          "Stack": "React, OpenAI",
+          "Result": "Top 10"
+        },
+        {
+          "Project": "E-Commerce",
+          "Stack": "Next.js, SQL",
+          "Result": "Launched"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "category": "Education & Certs",
+      "data": [
+        {
+          "Title": "CS Degree",
+          "Institution": "Univ"
+        },
+        {
+          "Title": "AWS Certified",
+          "Institution": "Amazon"
+        }
+      ]
+    }
+  ]
+}

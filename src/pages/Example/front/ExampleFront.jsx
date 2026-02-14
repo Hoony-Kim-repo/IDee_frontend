@@ -41,7 +41,7 @@ const bodyData = [
 
 const ExampleFront = () => {
   return (
-    <CardContainer bgImage={background}>
+    <CardContainer bgImage={background} isFront>
       <CardHeader name={"Hoony Kim"} jobTitle={"Software Engineer"} />
       <CardBody
         profileImage={profileImg}

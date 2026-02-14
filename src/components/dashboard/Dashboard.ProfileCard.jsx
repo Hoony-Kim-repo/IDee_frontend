@@ -10,7 +10,7 @@ const DashboardProfileCard = () => {
 
   const front = () => {
     return (
-      <CardContainer>
+      <CardContainer isFront>
         <CardHeader
           name={profile?.nickname || profile?.fullName}
           jobTitle={"Test"}
