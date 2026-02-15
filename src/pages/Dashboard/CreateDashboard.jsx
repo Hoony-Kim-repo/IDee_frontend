@@ -11,11 +11,14 @@ import FullNameField from "../../components/dashboard/Field.FullName";
 import NicknameField from "../../components/dashboard/Field.Nickname";
 import PhoneNumberField from "../../components/dashboard/Field.PhoneNumber";
 import ProfilePictureField from "../../components/dashboard/Field.ProfilePicture";
+import TagsField from "../../components/dashboard/Field.Tags";
 import { QUERY_KEYS } from "../../constants/queryKeys";
 
 const CreateDashboard = () => {
   const [errors, setErrors] = useState({ name: "" });
   const [loading, setLoading] = useState(false);
+
+  const [tags, setTags] = useState([]);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -29,27 +32,44 @@ const CreateDashboard = () => {
     },
   });
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const validateForm = (formData) => {
+    const errors = {};
+    let hasError = false;
 
-    setErrors({ name: "" });
-
-    const formData = new FormData(e.currentTarget);
     const fullName = formData.get("fullName")?.trim();
 
-    let hasError = false;
-    const newErrors = {};
-
     if (!fullName || fullName.length < 3) {
-      newErrors.name = { message: "Invalid name" };
+      errors.name = { message: "Invalid name" };
       hasError = true;
     }
 
+    const tagNames = tags.map((t) => t.name.trim().toLowerCase());
+    const hasDuplicate = new Set(tagNames).size !== tagNames.length;
+
+    if (hasDuplicate) {
+      errors.tags = { message: "Tags name should not be the same" };
+      hasError = true;
+    }
+
+    return { hasError, errors };
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    setErrors({ name: "", tags: "" });
+
+    const formData = new FormData(e.currentTarget);
+    const { hasError, errors } = validateForm(formData);
+
     if (hasError) {
-      setErrors(newErrors);
+      setErrors(errors);
       return;
     }
+
+    setLoading(true);
+
+    formData.append("tags", JSON.stringify(tags));
 
     try {
       await mutateAsync(formData);
@@ -107,6 +127,10 @@ const CreateDashboard = () => {
 
                 <Fieldset.Content gridColumn={{ base: "span 1", md: "span 2" }}>
                   <BioField />
+                </Fieldset.Content>
+
+                <Fieldset.Content>
+                  <TagsField tags={tags} setTags={setTags} errors={errors} />
                 </Fieldset.Content>
 
                 <Fieldset.Content gridColumn={{ base: "span 1", md: "span 2" }}>
