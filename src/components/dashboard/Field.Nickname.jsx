@@ -1,13 +1,14 @@
 import { Field, Input } from "@chakra-ui/react";
+import { useFormContext } from "react-hook-form";
 
 const NicknameField = () => {
+  const { register } = useFormContext();
+
   return (
     <Field.Root>
       <Field.Label>Nickname (Preferred Name)</Field.Label>
       <Input
-        id="nickname"
-        name="nickname"
-        type="text"
+        {...register("nickName")}
         placeholder="Enter your nickname"
         borderRadius="lg"
       />

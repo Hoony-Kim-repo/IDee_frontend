@@ -6,22 +6,22 @@
       "category": "Work History",
       "data": [
         {
-          "Company": "Google",
-          "Role": "Frontend Dev",
-          "Location": "Seoul",
-          "Date": "2023-2024"
+          "company": "Google",
+          "role": "Frontend Dev",
+          "location": "Seoul",
+          "date": "2023-2024"
         },
         {
-          "Company": "Meta",
-          "Role": "Junior Engineer",
-          "Location": "N.Y.",
-          "Date": "2022-2023"
+          "company": "Meta",
+          "role": "Junior Engineer",
+          "location": "N.Y.",
+          "date": "2022-2023"
         },
         {
-          "Company": "Startup X",
-          "Role": "Intern",
-          "Location": "Remote",
-          "Date": "2021"
+          "company": "Startup X",
+          "role": "Intern",
+          "location": "Remote",
+          "date": "2021"
         }
       ]
     },

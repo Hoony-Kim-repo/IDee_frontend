@@ -1,13 +1,14 @@
 import { Field, Input } from "@chakra-ui/react";
+import { useFormContext } from "react-hook-form";
 
 const PhoneNumberField = () => {
+  const { register } = useFormContext();
+
   return (
     <Field.Root>
       <Field.Label>Phone Number (without '-')</Field.Label>
       <Input
-        id="phoneNumber"
-        name="phoneNumber"
-        type="tel"
+        {...register("phoneNumber")}
         placeholder="Enter your Phone Number"
         borderRadius="lg"
       />

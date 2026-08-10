@@ -6,26 +6,27 @@ const CardFooter = ({ list }) => {
     <Grid templateColumns={"repeat(5, 1fr)"}>
       {/* Skills and Keywords */}
       <GridItem colSpan={4} p={4}>
-        {list.map((item, idx) => (
-          <Box mb={2} key={idx}>
-            <Text fontWeight={"bold"}>{item.category}</Text>
-            <HStack gap={4}>
-              {item.data.map((d, index) => (
-                <Box
-                  key={index}
-                  px={3}
-                  py={1}
-                  borderRadius="full"
-                  fontSize="sm"
-                  fontWeight="medium"
-                  boxShadow="0 2px 6px rgba(125,125,255,1)"
-                >
-                  {d}
-                </Box>
-              ))}
-            </HStack>
-          </Box>
-        ))}
+        {list &&
+          list.map((item, idx) => (
+            <Box mb={2} key={idx}>
+              <Text fontWeight={"bold"}>{item.category}</Text>
+              <HStack gap={4}>
+                {item.data.map((d, index) => (
+                  <Box
+                    key={index}
+                    px={3}
+                    py={1}
+                    borderRadius="full"
+                    fontSize="sm"
+                    fontWeight="medium"
+                    boxShadow="0 2px 6px rgba(125,125,255,1)"
+                  >
+                    {d}
+                  </Box>
+                ))}
+              </HStack>
+            </Box>
+          ))}
       </GridItem>
 
       {/* QR Codes */}

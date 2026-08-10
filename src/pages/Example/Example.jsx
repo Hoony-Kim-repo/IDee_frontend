@@ -3,7 +3,11 @@ import ExampleBack from "./back/ExampleBack";
 import ExampleFront from "./front/ExampleFront";
 
 const Example = () => {
-  return <IDCard front={ExampleFront} back={ExampleBack} />;
+  return (
+    <>
+      <IDCard front={ExampleFront} back={ExampleBack} />
+    </>
+  );
 };
 
 export default Example;

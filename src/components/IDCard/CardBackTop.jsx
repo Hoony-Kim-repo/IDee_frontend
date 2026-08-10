@@ -37,7 +37,7 @@ const CardBackTop = ({ list }) => {
             <DataList.ItemValue gap={5} flex={4}>
               {item.data.map((detail, index) => (
                 <Text key={index} fontWeight={"bold"}>
-                  {detail}
+                  {detail.company} {detail.role} {detail.location} {detail.date}
                 </Text>
               ))}
             </DataList.ItemValue>

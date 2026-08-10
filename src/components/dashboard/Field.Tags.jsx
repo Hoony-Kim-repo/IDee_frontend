@@ -1,42 +1,45 @@
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import TagList from "./TagList";
 
-const TagsField = ({ tags, setTags, errors }) => {
-  const onAddTagList = () => {
-    if (tags.length >= 2) return;
+const MAX_TAG_GROUPS = 2;
 
-    setTags((prev) => [
-      ...prev,
-      { id: crypto.randomUUID(), name: "Tag", items: [] },
-    ]);
-  };
+const TagsField = () => {
+  const { control } = useFormContext();
 
-  const onRemoveTagList = (id) => {
-    setTags((prev) => prev.filter((tag) => tag.id !== id));
-  };
-
-  // Tag List Change detect
-  const onUpdateTag = (updatedTag) => {
-    setTags((prev) =>
-      prev.map((tag) => (tag.id === updatedTag.id ? updatedTag : tag)),
-    );
-  };
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "tags",
+  });
 
   return (
-    <div>
+    <Box>
       <VStack align={"start"}>
-        {tags.map((tag) => (
-          <Box key={tag.id}>
-            <TagList tag={tag} onChange={onUpdateTag} />
-            <Button onClick={() => onRemoveTagList(tag.id)}>Delete</Button>
+        {fields.map((field, index) => (
+          <Box key={field.id}>
+            <TagList index={index} />
+            <Button onClick={() => remove(index)}>Delete</Button>
           </Box>
         ))}
       </VStack>
 
-      {tags.length < 2 && <Button onClick={onAddTagList}>Add Tag</Button>}
-      {tags.length >= 2 && <Text>You can add up to 2 tag groups.</Text>}
-      {errors && <Text color={"red.500"}>{errors.tags?.message}</Text>}
-    </div>
+      {fields.length < MAX_TAG_GROUPS && (
+        <Button
+          mt={4}
+          size={"sm"}
+          type={"button"}
+          onClick={() => append({ tagTitle: "", items: [] })}
+        >
+          Add New Tag Group
+        </Button>
+      )}
+
+      {fields.length >= MAX_TAG_GROUPS && (
+        <Text mt={2} fontSize={"sm"}>
+          You can add up to {MAX_TAG_GROUPS} tag groups.
+        </Text>
+      )}
+    </Box>
   );
 };
 

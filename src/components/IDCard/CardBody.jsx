@@ -4,7 +4,7 @@ import {
   Grid,
   GridItem,
   Image,
-  Text,
+  Textarea,
   VStack,
 } from "@chakra-ui/react";
 
@@ -42,30 +42,25 @@ const CardBody = ({ profileImage, list, bio }) => {
               divideY={"2px"}
               size={"lg"}
             >
-              {list.map((item, idx) => (
-                <DataList.Item key={idx} flex={1}>
-                  <DataList.ItemLabel
-                    color={"basicWhiteBlackColor"}
-                    fontWeight={"bold"}
-                  >
-                    {item.label}
-                  </DataList.ItemLabel>
-                  <DataList.ItemValue>{item.value}</DataList.ItemValue>
-                </DataList.Item>
-              ))}
+              {list &&
+                list.map((item, idx) => (
+                  <DataList.Item key={idx} flex={1}>
+                    <DataList.ItemLabel
+                      color={"basicWhiteBlackColor"}
+                      fontWeight={"bold"}
+                    >
+                      {item.label}
+                    </DataList.ItemLabel>
+                    <DataList.ItemValue>{item.value}</DataList.ItemValue>
+                  </DataList.Item>
+                ))}
             </DataList.Root>
           </Box>
         </GridItem>
       </Grid>
 
-      <Box
-        w={"100%"}
-        borderRadius="xl"
-        border={"0.5px dotted rgba(255, 255, 255, 0.6)"}
-        boxShadow="0 2px 10px rgba(0,0,0,0.2)"
-        p={6}
-      >
-        <Text>{bio}</Text>
+      <Box w={"100%"} borderRadius="xl" pt={6}>
+        <Textarea size={"xl"} autoresize maxLines={3} defaultValue={bio} />
       </Box>
     </VStack>
   );

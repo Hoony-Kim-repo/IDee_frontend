@@ -13,6 +13,7 @@ import PhoneNumberField from "../../components/dashboard/Field.PhoneNumber";
 import ProfilePictureField from "../../components/dashboard/Field.ProfilePicture";
 import TagsField from "../../components/dashboard/Field.Tags";
 import { QUERY_KEYS } from "../../constants/queryKeys";
+import CreateDashboardTwo from "./CreateDashboardTwo";
 
 const CreateDashboard = () => {
   const [errors, setErrors] = useState({ name: "" });
@@ -144,6 +145,8 @@ const CreateDashboard = () => {
                 </Fieldset.Content>
               </Grid>
             </Fieldset.Root>
+
+            <CreateDashboardTwo />
           </VStack>
         </form>
       </Box>

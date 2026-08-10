@@ -39,6 +39,8 @@ const IDCard = ({ front: Front, back: Back }) => {
           style={{
             transformStyle: "preserve-3d",
             justifyItems: "center",
+            width: "100%",
+            height: "100%",
           }}
         >
           {Back ? <Back /> : <Text>No BackGround Yet</Text>}

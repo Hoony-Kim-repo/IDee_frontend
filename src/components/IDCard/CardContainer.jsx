@@ -5,9 +5,7 @@ const CardContainer = ({ isFront = false, bgImage, children }) => {
 
   return (
     <Box
-      minW={"80%"}
       w="80%"
-      minH={"80vh"}
       h="80vh"
       borderRadius="2xl"
       boxShadow="20px 60px 40px rgba(0, 0, 0, 0.5)"

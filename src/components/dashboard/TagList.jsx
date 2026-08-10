@@ -1,67 +1,75 @@
-import { Field, HStack, IconButton, Input, Tag, Wrap } from "@chakra-ui/react";
+import {
+  Field,
+  HStack,
+  IconButton,
+  Input,
+  Tag,
+  Text,
+  Wrap,
+} from "@chakra-ui/react";
 import { useState } from "react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { LuCheckCheck, LuPencil, LuUndo } from "react-icons/lu";
 
-const TagList = ({ tag, onChange }) => {
-  const { name, items } = tag;
-  // Tag Statements
-  const [tempTagName, setTempTagName] = useState(name);
+const MAX_TAG_ITEM = 5;
+
+const TagList = ({ index }) => {
+  const { control, setValue, watch } = useFormContext();
+  // Watch tag title from RHF state.
+  const tagName = watch(`tags.${index}.tagTitle`);
+
+  // UI editing state
   const [isEditing, setIsEditing] = useState(false);
+  const [tempTagName, setTempTagName] = useState(tagName || "");
+  const [tagValue, setTagValue] = useState("");
 
-  //   items statements
-  const [value, setValue] = useState("");
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: `tags.${index}.items`,
+  });
 
-  const handleTagSave = () => {
-    onChange({
-      ...tag,
-      name: tempTagName.trim(),
+  const startEdit = () => {
+    setTempTagName(tagName || "");
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    const trimmed = tempTagName.trim();
+
+    if (!trimmed) return;
+
+    setValue(`tags.${index}.tagTitle`, trimmed, {
+      shouldDirty: true,
+      shouldValidate: true,
     });
+
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setTempTagName(name);
+    setTempTagName(tagName || "");
     setIsEditing(false);
   };
 
   const handleListAdd = () => {
-    const newValue = {
-      id: crypto.randomUUID(),
-      value: value.trim(),
-    };
+    const trimmed = tagValue.trim();
 
-    if (
-      items.some(
-        (item) => item.value.toLowerCase() === newValue.value.toLowerCase(),
-      )
-    ) {
-      setValue("");
+    if (!trimmed) return;
+
+    const duplicate = fields.some(
+      (item) => item.value.toLowerCase() === trimmed.toLowerCase(),
+    );
+
+    if (duplicate) {
+      setTagValue("");
       return;
     }
-    onChange({
-      ...tag,
-      items: [...items, newValue],
-    });
 
-    setValue("");
-  };
+    if (fields.length >= MAX_TAG_ITEM) return;
 
-  const actionMap = {
-    mode: () => setIsEditing((prev) => !prev),
-    save: handleTagSave,
-    cancel: handleCancel,
-    itemAdd: handleListAdd,
-  };
+    append({ value: trimmed });
 
-  const handleIconButtonActions = (fn) => {
-    actionMap[fn]?.();
-  };
-
-  const onRemoveItem = (uid) => {
-    onChange({
-      ...tag,
-      items: items.filter((item) => item.id !== uid),
-    });
+    setTagValue("");
   };
 
   return (
@@ -69,41 +77,45 @@ const TagList = ({ tag, onChange }) => {
       {isEditing ? (
         <HStack>
           <Input
+            placeholder="Tag Title"
+            autoFocus
             value={tempTagName}
             onChange={(e) => setTempTagName(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                handleTagSave();
+                handleSave();
               }
             }}
           />
+
           <IconButton
             size={"xs"}
             variant={"ghost"}
-            aria-label="Edit Tag Name"
+            aria-label="Save Tag Name"
             disabled={tempTagName.trim() === ""}
-            onClick={() => handleIconButtonActions("save")}
+            onClick={handleSave}
           >
             <LuCheckCheck />
           </IconButton>
+
           <IconButton
             size={"xs"}
             variant={"ghost"}
-            aria-label="Edit Tag Name"
-            onClick={() => handleIconButtonActions("cancel")}
+            aria-label="Cancel Edit"
+            onClick={handleCancel}
           >
             <LuUndo />
           </IconButton>
         </HStack>
       ) : (
         <HStack>
-          <Field.Label>{name}</Field.Label>
+          <Field.Label>{tagName || "New Tag"}</Field.Label>
           <IconButton
             size={"xs"}
             variant={"ghost"}
             aria-label="Edit Tag Name"
-            onClick={() => handleIconButtonActions("mode")}
+            onClick={startEdit}
           >
             <LuPencil />
           </IconButton>
@@ -111,32 +123,40 @@ const TagList = ({ tag, onChange }) => {
       )}
 
       <HStack>
-        <Input
-          placeholder="value"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              handleListAdd();
-            }
-          }}
-        />
+        {fields.length < MAX_TAG_ITEM ? (
+          <>
+            <Input
+              placeholder="value"
+              value={tagValue}
+              onChange={(e) => setTagValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleListAdd();
+                }
+              }}
+            />
 
-        <IconButton
-          size={"xs"}
-          variant={"ghost"}
-          aria-label="Add Item"
-          disabled={value.trim() === ""}
-          onClick={() => handleIconButtonActions("itemAdd")}
-        >
-          <LuCheckCheck />
-        </IconButton>
+            <IconButton
+              size={"xs"}
+              variant={"ghost"}
+              aria-label="Add Item"
+              disabled={tagValue.trim() === ""}
+              onClick={handleListAdd}
+            >
+              <LuCheckCheck />
+            </IconButton>
+          </>
+        ) : (
+          <Text mt={2} fontSize={"sm"}>
+            You can add up to {MAX_TAG_ITEM} tag.
+          </Text>
+        )}
       </HStack>
 
       {/* Tag List */}
       <Wrap>
-        {items.map((item) => (
+        {fields.map((item, itemIndex) => (
           <Tag.Root
             key={item.id}
             colorPalette={"blue"}
@@ -144,8 +164,9 @@ const TagList = ({ tag, onChange }) => {
             size={"lg"}
           >
             <Tag.Label>{item.value}</Tag.Label>
+
             <Tag.EndElement>
-              <Tag.CloseTrigger onClick={() => onRemoveItem(item.id)} />
+              <Tag.CloseTrigger onClick={() => remove(itemIndex)} />
             </Tag.EndElement>
           </Tag.Root>
         ))}
