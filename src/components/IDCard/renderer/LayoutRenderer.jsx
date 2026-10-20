@@ -9,11 +9,12 @@ const LayoutRenderer = ({ layoutType, children }) => {
   // Handle missing or invalid layout configurations.
   if (!selectedLayout) return null;
 
-  const { templateColumns, areas } = selectedLayout.layout;
+  const { templateColumns, templateRows, areas } = selectedLayout.layout;
 
   return (
     <Grid
       templateColumns={templateColumns}
+      templateRows={templateRows}
       templateAreas={areas}
       gap={4}
       h={"100%"}

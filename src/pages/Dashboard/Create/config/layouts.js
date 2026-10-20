@@ -35,7 +35,8 @@ const layouts = [
       },
     ],
     layout: {
-      templateColumns: "1fr",
+      templateColumns: "minmax(0, 1fr)",
+      templateRows: "minmax(0, 1fr)",
       rowCounts: "1",
       areas: `
         "content0"
@@ -60,7 +61,8 @@ const layouts = [
       },
     ],
     layout: {
-      templateColumns: "1fr",
+      templateColumns: "minmax(0, 1fr)",
+      templateRows: "repeat(2, minmax(0, 1fr))",
       rowCounts: "2",
       areas: `
         "content0"
@@ -86,7 +88,8 @@ const layouts = [
       },
     ],
     layout: {
-      templateColumns: "1fr 1fr",
+      templateColumns: "repeat(2, minmax(0, 1fr))",
+      templateRows: "minmax(0, 1fr)",
       rowCounts: "1",
       areas: `
         "content0 content1"
@@ -115,7 +118,8 @@ const layouts = [
       },
     ],
     layout: {
-      templateColumns: "1fr 1fr",
+      templateColumns: "repeat(2, minmax(0, 1fr))",
+      templateRows: "repeat(2, minmax(0, 1fr))",
       rowCounts: "2",
       areas: `
         "content0 content0"
@@ -145,7 +149,8 @@ const layouts = [
       },
     ],
     layout: {
-      templateColumns: "1fr 1fr",
+      templateColumns: "repeat(2, minmax(0, 1fr))",
+      templateRows: "repeat(2, minmax(0, 1fr))",
       rowCounts: "2",
       areas: `
         "content0 content1"
@@ -179,7 +184,8 @@ const layouts = [
       },
     ],
     layout: {
-      templateColumns: "1fr 1fr",
+      templateColumns: "repeat(2, minmax(0, 1fr))",
+      templateRows: "repeat(2, minmax(0, 1fr))",
       rowCounts: "2",
       areas: `
         "content0 content1"
