@@ -1,46 +1,28 @@
 import { layouts } from "../config/layouts";
 
 /**
- * RHF Form Data -> Card Render Data
+ * Converts RHF form values into the data model
+ * consumed by the card renderers.
  */
 export const buildCardData = (formData) => {
-  const layout = layouts.find((l) => {
-    if (!layout) return;
+  // Find the selected layout definition.
+  const layout = layouts.find((l) => l.value === formData.backgroundLayout);
 
-    l.value === formData.backgroundLayout;
-  });
+  // Fallback if the layout does not exist.
+  if (!layout) return null;
 
-  const contents = formData.backgroundContents || [];
+  // Keep only the visible content slots.
+  const visibleContents = (formData.backgroundContents ?? [])
+    .slice(0, layout.slots.length)
+    .filter((content) => content?.type);
 
-  const visibleContents = contents
-    .slice(0, layout.contentCount)
-    .filter((c) => c?.type);
-
-  // Convert based on content type
-  // RHF methods backgroundContents
+  // The renderer consumes the same shape as the form state.
+  // Preserve the original content shape.
   const mappedContents = visibleContents
-    .map((content) => {
-      switch (content.type) {
-        case "text":
-          return {
-            type: "text",
-            value: content.data.text,
-          };
-        case "image":
-          return {
-            type: "image",
-            src: content.data.url,
-          };
-        case "links":
-          return {
-            type: "links",
-            links: content.data.links,
-          };
-        default:
-          return null;
-      }
-    })
-    .filter(Boolean);
+    .map((content) => ({
+      type: content.type,
+      data: content.data,
+    }));
 
   return {
     front: {
@@ -53,6 +35,7 @@ export const buildCardData = (formData) => {
       bio: formData.bio,
     },
     back: {
+      backgroundImage: formData.backgroundImage,
       layoutType: formData.backgroundLayout,
       backgroundContents: mappedContents,
     },

@@ -1,0 +1,20 @@
+{
+  "title": "Key Projects",
+  "columns": [
+    { "key": "project", "label": "Project" },
+    { "key": "stack", "label": "Tech Stack" },
+    { "key": "result", "label": "Result" }
+  ],
+  "rows": [
+    {
+      "project": "AI Chatbot",
+      "stack": "React, OpenAI",
+      "result": "Top 10"
+    },
+    {
+      "project": "E-Commerce",
+      "stack": "Next.js, SQL",
+      "result": "Launched"
+    }
+  ]
+}

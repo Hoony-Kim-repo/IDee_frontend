@@ -2,8 +2,16 @@
 // This follows the exact same shape produced by buildCardData()
 import background from "../../../assets/Example/background.webp";
 import profileImage from "../../../assets/Example/my-profile-picture.jpg";
-import experiences from "./Experiences.json";
+import educationCert from "./EducationCert.json";
+import keyProject from "./KeyProjects.json";
 import skills from "./Skills.json";
+import workHistory from "./WorkHistory.json";
+
+const skillsText = (skills?.list ?? []).map((section) => {
+  const items = Array.isArray(section.data) ? section.data.join(", ") : "";
+
+  return `${section.category}\n${items}`;
+});
 
 export const exampleCardData = {
   front: {
@@ -11,8 +19,7 @@ export const exampleCardData = {
     profileImage: profileImage,
     name: "Hoony Kim",
     jobTitle: "Software Engineer",
-    bio: `Hi, I am Gihoon Kim (Hoony Kim).
-I am on a journey to find my own happiness.
+    bio: `I am on a journey to find my own happiness.
 I know that whatever challenges come my way-now or in the future- I have what it takes to overcome them.`,
     bodyList: [
       {
@@ -49,18 +56,24 @@ I know that whatever challenges come my way-now or in the future- I have what it
   },
   back: {
     backgroundImage: background,
-    layoutType: "top-bottom",
+    layoutType: "grid",
     backgroundContents: [
       {
-        type: "links",
-        data: {
-          links: skills,
-        },
+        type: "table",
+        data: workHistory,
+      },
+      {
+        type: "table",
+        data: keyProject,
+      },
+      {
+        type: "table",
+        data: educationCert,
       },
       {
         type: "text",
         data: {
-          text: experiences.map((item) => item.company).join("\n"),
+          text: skillsText,
         },
       },
     ],

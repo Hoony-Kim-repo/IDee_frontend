@@ -1,11 +1,13 @@
 import ImageContentEditor from "./types/ImageContentEditor";
 import LinksContentEditor from "./types/LinksContentEditor";
+import TableContentEditor from "./types/TableContentEditor";
 import TextContentEditor from "./types/TextContentEditor";
 
+// This registry defines the available content types and their editor configurations.
 export const CONTENT_REGISTRY = {
   text: {
     label: "Text",
-    description: "Pragraph or description",
+    description: "Paragraph or description",
     editor: TextContentEditor,
     defaultData: {
       text: "",
@@ -25,6 +27,21 @@ export const CONTENT_REGISTRY = {
     editor: LinksContentEditor,
     defaultData: {
       links: [],
+    },
+  },
+  table: {
+    label: "Table",
+    description: "Structured data with editable rows and columns",
+    editor: TableContentEditor,
+    defaultData: {
+      title: "",
+      columns: [
+        {
+          key: "column_1",
+          label: "Column 1",
+        },
+      ],
+      rows: [],
     },
   },
 };

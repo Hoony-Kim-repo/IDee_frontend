@@ -59,8 +59,8 @@ const CardBody = ({ profileImage, list, bio }) => {
         </GridItem>
       </Grid>
 
-      <Box w={"100%"} borderRadius="xl" pt={6}>
-        <Textarea size={"xl"} autoresize maxLines={3} defaultValue={bio} />
+      <Box w={"100%"} borderRadius="xl" pt={4}>
+        <Textarea size={"xl"} autoresize maxLines={2} defaultValue={bio} />
       </Box>
     </VStack>
   );

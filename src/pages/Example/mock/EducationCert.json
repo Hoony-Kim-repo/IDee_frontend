@@ -1,0 +1,17 @@
+{
+  "title": "Education & Certifications",
+  "columns": [
+    { "key": "title", "label": "Qualification" },
+    { "key": "institution", "label": "Institution" }
+  ],
+  "rows": [
+    {
+      "title": "CS Degree",
+      "institution": "Univ"
+    },
+    {
+      "title": "AWS Certified",
+      "institution": "Amazon"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { Textarea } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 
+// This component provides the form editor for plain text content.
 const TextContentEditor = ({ index }) => {
   const { register } = useFormContext();
 

@@ -1,0 +1,29 @@
+{
+  "title": "Work History",
+  "columns": [
+    { "key": "company", "label": "Company" },
+    { "key": "role", "label": "Role" },
+    { "key": "location", "label": "Location" },
+    { "key": "date", "label": "Period" }
+  ],
+  "rows": [
+    {
+      "company": "Google",
+      "role": "Frontend Dev",
+      "location": "Seoul",
+      "date": "2023-2024"
+    },
+    {
+      "company": "Meta",
+      "role": "Junior Engineer",
+      "location": "N.Y.",
+      "date": "2022-2023"
+    },
+    {
+      "company": "Startup X",
+      "role": "Intern",
+      "location": "Remote",
+      "date": "2021"
+    }
+  ]
+}
