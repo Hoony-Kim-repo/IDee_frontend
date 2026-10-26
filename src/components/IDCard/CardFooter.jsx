@@ -6,14 +6,19 @@ const CardFooter = ({ list }) => {
     <Grid templateColumns={"repeat(5, 1fr)"}>
       {/* Skills and Keywords */}
       <GridItem colSpan={4} p={4}>
-        {list &&
-          list.map((item, idx) => (
-            <Box mb={2} key={idx}>
-              <Text fontWeight={"bold"}>{item.category}</Text>
+        {list.map((item, idx) => {
+          const data = Array.isArray(item?.data) ? item.data : [];
+
+          return (
+            <Box mb={2} key={item?.category ?? idx}>
+              <Text fontWeight={"bold"}>
+                {item?.category ?? item?.tagTitle ?? ""}
+              </Text>
+
               <HStack gap={4}>
-                {item.data.map((d, index) => (
+                {data.map((d, index) => (
                   <Box
-                    key={index}
+                    key={`${item?.category ?? idx}-${index}`}
                     px={3}
                     py={1}
                     borderRadius="full"
@@ -26,7 +31,8 @@ const CardFooter = ({ list }) => {
                 ))}
               </HStack>
             </Box>
-          ))}
+          );
+        })}
       </GridItem>
 
       {/* QR Codes */}

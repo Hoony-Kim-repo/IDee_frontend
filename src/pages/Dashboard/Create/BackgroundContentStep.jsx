@@ -23,7 +23,7 @@ const BackgroundContentStep = () => {
   // RHF FieldArray controller
   const { fields, replace } = useFieldArray({
     control,
-    name: "backgdroundContents",
+    name: "backgroundContents",
   });
 
   // Sync fieldArray length with layout contentCount

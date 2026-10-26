@@ -18,9 +18,8 @@ const ContentTypeSelector = ({ value, onChange }) => {
             <Popover.Body>
               {Object.entries(CONTENT_REGISTRY).map(([type, config]) => {
                 return (
-                  <Popover.CloseTrigger asChild>
+                  <Popover.CloseTrigger key={type} asChild>
                     <Button
-                      key={type}
                       onClick={() => onChange(type)}
                       m={1}
                       borderRadius="lg"
