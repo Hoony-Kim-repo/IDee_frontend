@@ -90,6 +90,9 @@ const config = defineConfig({
         dashboardCardBg: {
           value: { base: "rgba(255,255,255, 0.8)", _dark: "rgba(0,0,0,0.8)" },
         },
+        dialogBg: {
+          value: { base: "{colors.brand.50}", _dark: "rgba(0,0,0,1)" },
+        },
 
         avatarMenuItemHighlight: {
           value: {

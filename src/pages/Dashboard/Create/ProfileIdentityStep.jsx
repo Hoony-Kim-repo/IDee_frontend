@@ -8,25 +8,21 @@ import PhoneNumberField from "../../../components/dashboard/Field.PhoneNumber";
 const ProfileIdentityStep = () => {
   return (
     <Fieldset.Root>
-      <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
-        <Fieldset.Content>
+      {/* Gives the group an accessible name for screen readers.
+          The wizzard header already shows this title, so hide it visually. */}
+      <Fieldset.Legend srOnly>Basic Information</Fieldset.Legend>
+
+      <Fieldset.Content>
+        <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
           <FullNameField />
-        </Fieldset.Content>
-        <Fieldset.Content>
           <NicknameField />
-        </Fieldset.Content>
 
-        <Fieldset.Content>
           <PhoneNumberField />
-        </Fieldset.Content>
-        <Fieldset.Content>
           <DateOfBirthField />
-        </Fieldset.Content>
 
-        <Fieldset.Content>
           <JobTitleField />
-        </Fieldset.Content>
-      </Grid>
+        </Grid>
+      </Fieldset.Content>
     </Fieldset.Root>
   );
 };
