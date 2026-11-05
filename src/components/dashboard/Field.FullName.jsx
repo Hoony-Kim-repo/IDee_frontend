@@ -13,16 +13,12 @@ const FullNameField = () => {
         Full Name <Field.RequiredIndicator />
       </Field.Label>
       <Input
-        {...register("fullName", {
-          required: "Full name is required",
-          minLength: {
-            value: 3,
-            message: "Name must be at least 3 characters",
-          },
-        })}
+        {...register("fullName")}
+        autoComplete="name"
         placeholder="Enter your full name"
         borderRadius="lg"
       />
+      {/* The message now comes from the Zod schema through zodResolver */}
       <Field.ErrorText>{errors.fullName?.message}</Field.ErrorText>
     </Field.Root>
   );

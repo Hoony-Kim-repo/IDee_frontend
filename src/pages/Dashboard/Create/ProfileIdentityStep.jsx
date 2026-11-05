@@ -1,5 +1,4 @@
 import { Fieldset, Grid } from "@chakra-ui/react";
-import DateOfBirthField from "../../../components/dashboard/Field.DOB";
 import FullNameField from "../../../components/dashboard/Field.FullName";
 import JobTitleField from "../../../components/dashboard/Field.JobTitle";
 import NicknameField from "../../../components/dashboard/Field.Nickname";
@@ -18,7 +17,6 @@ const ProfileIdentityStep = () => {
           <NicknameField />
 
           <PhoneNumberField />
-          <DateOfBirthField />
 
           <JobTitleField />
         </Grid>

@@ -25,7 +25,7 @@ export const STEPS = [
     id: "identity",
     title: "Basic Information",
     component: ProfileIdentityStep,
-    fields: ["fullName", "nickName", "phoneNumber", "dob", "jobTitle"],
+    fields: ["fullName", "nickname", "phoneNumber", "jobTitle"],
   },
   {
     id: "branding",

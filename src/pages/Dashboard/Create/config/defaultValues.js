@@ -15,9 +15,8 @@
 export const DEFAULT_VALUES = {
   // Step 1: Basic Information
   fullName: "",
-  nickName: "",
+  nickname: "",
   phoneNumber: "",
-  dob: "",
   jobTitle: "",
 
   // Step 2: Profile Branding

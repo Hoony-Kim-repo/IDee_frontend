@@ -1,4 +1,5 @@
 import { Box, Steps } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +8,7 @@ import WizardFooter from "./Create/components/WizardFooter";
 import { DEFAULT_VALUES } from "./Create/config/defaultValues";
 import { STEPS } from "./Create/config/steps";
 import { useWizardNavigation } from "./Create/hooks/useWizardNavigation";
+import { createProfileSchema } from "./Create/schema/createProfileSchema";
 
 /**
  * CreateDashboard.jsx
@@ -32,6 +34,7 @@ const CreateDashboardTwo = () => {
   const methods = useForm({
     mode: "onBlur",
     defaultValues: DEFAULT_VALUES,
+    resolver: zodResolver(createProfileSchema),
   });
 
   const { step, isFirstStep, isLastStep, goToNext, goToPrev, goToStep } =
