@@ -15,6 +15,11 @@
 
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import z from "zod";
+import {
+  MAX_PROFILE_PICTURE_BYTES,
+  MAX_PROFILE_PICTURE_MB,
+  PROFILE_PICTURE_ACCEPT,
+} from "../../../../constants/profilePicture";
 
 // Named constant so the rule is easy to find and change.
 export const MIN_FULL_NAME_LENGTH = 2;
@@ -71,9 +76,22 @@ const jobTitleSchema = z
     `Job title must be at most ${MAX_JOB_TITLE_LENGTH} characters`,
   );
 
+// Optional field: a File, or null when there is no picture.
+// The upload widget already blocks invalid files; this is the safety net.
+// (The server must check type and size again: browser data can be faked.)
+const profilePictureSchema = z
+  .file()
+  .max(
+    MAX_PROFILE_PICTURE_BYTES,
+    `The image must be ${MAX_PROFILE_PICTURE_MB} MB or smaller.`,
+  )
+  .mime(PROFILE_PICTURE_ACCEPT, "Please choose a PNG, JPG or WebP image.")
+  .nullable();
+
 export const createProfileSchema = z.looseObject({
   fullName: fullNameSchema,
   nickname: nicknameSchema,
   phoneNumber: phoneNumberSchema,
   jobTitle: jobTitleSchema,
+  profilePicture: profilePictureSchema,
 });
