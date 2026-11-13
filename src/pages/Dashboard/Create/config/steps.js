@@ -31,7 +31,7 @@ export const STEPS = [
     id: "branding",
     title: "Profile Branding",
     component: ProfileBrandingStep,
-    fields: ["profilePicture"],
+    fields: ["profilePicture", "links"],
   },
   {
     id: "hightlight",

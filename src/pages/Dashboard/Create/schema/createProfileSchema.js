@@ -15,6 +15,7 @@
 
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import z from "zod";
+import { MAX_LINK_TITLE_LENGTH, MAX_LINKS } from "../../../../constants/links";
 import {
   MAX_PROFILE_PICTURE_BYTES,
   MAX_PROFILE_PICTURE_MB,
@@ -76,6 +77,8 @@ const jobTitleSchema = z
     `Job title must be at most ${MAX_JOB_TITLE_LENGTH} characters`,
   );
 
+// ----------------------- Profile Branding Step -----------------------
+
 // Optional field: a File, or null when there is no picture.
 // The upload widget already blocks invalid files; this is the safety net.
 // (The server must check type and size again: browser data can be faked.)
@@ -88,10 +91,64 @@ const profilePictureSchema = z
   .mime(PROFILE_PICTURE_ACCEPT, "Please choose a PNG, JPG or WebP image.")
   .nullable();
 
+// True when the text starts with a scheme such as "https:" or "javascript:".
+const hasScheme = (text) => /^[a-z][a-z0-9+.-]*:/i.test(text);
+
+// "linkedin.com/in/me" --> "https://linkedin.com/in/me"
+// Text that already has a scheme is NOT touched, so "javascript:..." stays as it is and is rejected by the check below.
+const addHttpsIfMissing = (text) =>
+  text === "" || hasScheme(text) ? text : `https://${text}`;
+
+// Only web addresses are allowed:
+//  - "javascript:" and similar links would run code when a visitor clicks them on the card (XSS), so every non-web scheme is rejected.
+//  - plain "http://" is rejected too: browsers (Chrome 154+) warn visitors before opening public http sites.
+//    To also allow http, change the protocol below to /^https?$/.
+const webUrlSchema = z.url({
+  protocol: /^https$/,
+  hostname: z.regexes.domain,
+});
+
+// A link row is either completely empty or completely filled in (title AND url). Empty rows are dropped by the array transform below.
+const linkSchema = z
+  .object({
+    title: z
+      .string()
+      .trim()
+      .max(
+        MAX_LINK_TITLE_LENGTH,
+        `Title must be at most ${MAX_LINK_TITLE_LENGTH} characters`,
+      ),
+    url: z.string().trim().transform(addHttpsIfMissing),
+  })
+  // A title without a URL makes no sense. `path` puts the error on the URL input.
+  .refine((link) => !(link.title !== "" && link.url === ""), {
+    path: ["url"],
+    message: "Enter a URL for this link.",
+  })
+  .refine((link) => !(link.url !== "" && link.title === ""), {
+    path: ["title"],
+    message: "Enter a title for this link.",
+  })
+  // Empty rows are fine (they are dropped below); filled rows must be valid.
+  .refine(
+    (link) => link.url === "" || webUrlSchema.safeParse(link.url).success,
+    {
+      path: ["url"],
+      message: "Enter a valid web address (https://...)",
+    },
+  );
+
+// Optional field: rows without a URL are removed from the submitted data.
+const linksSchema = z
+  .array(linkSchema)
+  .max(MAX_LINKS)
+  .transform((links) => links.filter((link) => link.url !== ""));
+
 export const createProfileSchema = z.looseObject({
   fullName: fullNameSchema,
   nickname: nicknameSchema,
   phoneNumber: phoneNumberSchema,
   jobTitle: jobTitleSchema,
   profilePicture: profilePictureSchema,
+  links: linksSchema,
 });

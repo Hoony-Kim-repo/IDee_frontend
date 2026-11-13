@@ -21,8 +21,6 @@ export const DEFAULT_VALUES = {
 
   // Step 2: Profile Branding
   profilePicture: null,
-  // TODO: the empty first row has required url, which blocks the final submit even though links are optional.
-  // Fix when we review this step.
   links: [{ title: "", url: "" }],
 
   // Step 3: Profile Highlight
