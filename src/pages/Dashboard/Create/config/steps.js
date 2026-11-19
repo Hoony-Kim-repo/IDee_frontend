@@ -37,7 +37,7 @@ export const STEPS = [
     id: "hightlight",
     title: "Profile Hightlight",
     component: ProfileHighlightStep,
-    fields: [],
+    fields: ["bio"],
   },
   {
     id: "backgroundLayout",

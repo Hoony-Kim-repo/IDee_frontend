@@ -15,6 +15,7 @@
 
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import z from "zod";
+import { MAX_BIO_LENGTH } from "../../../../constants/bio";
 import { MAX_LINK_TITLE_LENGTH, MAX_LINKS } from "../../../../constants/links";
 import {
   MAX_PROFILE_PICTURE_BYTES,
@@ -144,6 +145,14 @@ const linksSchema = z
   .max(MAX_LINKS)
   .transform((links) => links.filter((link) => link.url !== ""));
 
+// ----------------------- Profile Highlight Step -----------------------
+
+// maxLength on the textarea already limits typing; this is the safety net.
+const bioSchema = z
+  .string()
+  .trim()
+  .max(MAX_BIO_LENGTH, `Bio must be at most ${MAX_BIO_LENGTH} characters`);
+
 export const createProfileSchema = z.looseObject({
   fullName: fullNameSchema,
   nickname: nicknameSchema,
@@ -151,4 +160,5 @@ export const createProfileSchema = z.looseObject({
   jobTitle: jobTitleSchema,
   profilePicture: profilePictureSchema,
   links: linksSchema,
+  bio: bioSchema,
 });
