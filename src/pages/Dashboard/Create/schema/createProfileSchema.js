@@ -22,6 +22,12 @@ import {
   MAX_PROFILE_PICTURE_MB,
   PROFILE_PICTURE_ACCEPT,
 } from "../../../../constants/profilePicture";
+import {
+  MAX_TAG_GROUPS,
+  MAX_TAG_LENGTH,
+  MAX_TAG_TITLE_LENGTH,
+  MAX_TAGS_PER_GROUP,
+} from "../../../../constants/tags";
 
 // Named constant so the rule is easy to find and change.
 export const MIN_FULL_NAME_LENGTH = 2;
@@ -153,6 +159,52 @@ const bioSchema = z
   .trim()
   .max(MAX_BIO_LENGTH, `Bio must be at most ${MAX_BIO_LENGTH} characters`);
 
+// A tag group is either completely empty or has a title AND at least one tag (same idea as the link rows).
+// Empty groups are dropped by the transform below.
+const tagGroupSchema = z
+  .object({
+    tagTitle: z
+      .string()
+      .trim()
+      .max(
+        MAX_TAG_TITLE_LENGTH,
+        `Title must be at most ${MAX_TAG_TITLE_LENGTH} characters`,
+      ),
+    items: z
+      .array(
+        z
+          .string()
+          .trim()
+          .min(1, "A tag cannot be empty")
+          .max(
+            MAX_TAG_LENGTH,
+            `A tag must be at most ${MAX_TAG_LENGTH} characters`,
+          ),
+      )
+      .max(MAX_TAGS_PER_GROUP, `You can add up to ${MAX_TAGS_PER_GROUP} tags`)
+      // The tags input already refuses duplicates; this is the safety net.
+      .refine(
+        (items) =>
+          new Set(items.map((item) => item.toLowerCase())).size ===
+          items.length,
+        "Tags must be unique",
+      ),
+  })
+  .refine((group) => !(group.items.length > 0 && group.tagTitle === ""), {
+    path: ["tagTitle"],
+    message: "Enter a title for this tag group",
+  })
+  .refine((group) => !(group.tagTitle !== "" && group.items.length === 0), {
+    path: ["items"],
+    message: "Add at least one tag to this group",
+  });
+
+// Optional field: groups without tags are removed from the submitted data.
+const tagsSchema = z
+  .array(tagGroupSchema)
+  .max(MAX_TAG_GROUPS)
+  .transform((groups) => groups.filter((group) => group.items.length > 0));
+
 export const createProfileSchema = z.looseObject({
   fullName: fullNameSchema,
   nickname: nicknameSchema,
@@ -161,4 +213,5 @@ export const createProfileSchema = z.looseObject({
   profilePicture: profilePictureSchema,
   links: linksSchema,
   bio: bioSchema,
+  tags: tagsSchema,
 });
