@@ -195,4 +195,12 @@ const layouts = [
   },
 ];
 
-export { layouts };
+// The form always keeps content for this many slots (the largest layout).
+// So switching layouts never loses what the user typed.
+const MAX_CONTENT_SLOTS = Math.max(...layouts.map((item) => item.slots.length));
+
+// Number of content slots of a layout (0 for an unknown layout value).
+const getSlotCount = (layoutValue) =>
+  layouts.find((item) => item.value === layoutValue)?.slots.length ?? 0;
+
+export { getSlotCount, layouts, MAX_CONTENT_SLOTS };

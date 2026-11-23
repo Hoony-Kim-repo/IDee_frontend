@@ -1,3 +1,5 @@
+import { MAX_CONTENT_SLOTS } from "./layouts";
+
 /**
  * defaultValues.js
  *
@@ -32,11 +34,9 @@ export const DEFAULT_VALUES = {
   backgroundLayout: "single",
 
   // Step 5: Background Contents
-  // The number of entries must match the slot count of the selected layout.
-  backgroundContents: [
-    {
-      type: "",
-      data: {},
-    },
-  ],
+  // Always has one entry per slot of the LARGEST layout. The selected layout only decides how many of them are shown and submited.
+  backgroundContents: Array.from({ length: MAX_CONTENT_SLOTS }, () => ({
+    type: "",
+    data: {},
+  })),
 };

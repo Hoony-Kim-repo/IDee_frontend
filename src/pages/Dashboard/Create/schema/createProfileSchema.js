@@ -28,6 +28,7 @@ import {
   MAX_TAG_TITLE_LENGTH,
   MAX_TAGS_PER_GROUP,
 } from "../../../../constants/tags";
+import { getSlotCount } from "../config/layouts";
 
 // Named constant so the rule is easy to find and change.
 export const MIN_FULL_NAME_LENGTH = 2;
@@ -205,7 +206,27 @@ const tagsSchema = z
   .max(MAX_TAG_GROUPS)
   .transform((groups) => groups.filter((group) => group.items.length > 0));
 
-export const createProfileSchema = z.looseObject({
+// ----------------------- Background Content Step -----------------------
+// The form keeps content for up to MAX_CONTENT_SLOTS slots, even for slots the selected layout does not show.
+// Before validating, keep only the slots of the current layout, so hidden slots are neither validated nor submitted.
+const keepActiveContents = (values) => {
+  if (
+    !values ||
+    typeof values !== "object" ||
+    !Array.isArray(values.backgroundContents)
+  )
+    return values;
+
+  return {
+    ...values,
+    backgroundContents: values.backgroundContents.slice(
+      0,
+      getSlotCount(values.backgroundLayout),
+    ),
+  };
+};
+
+const profileSchema = z.looseObject({
   fullName: fullNameSchema,
   nickname: nicknameSchema,
   phoneNumber: phoneNumberSchema,
@@ -215,3 +236,8 @@ export const createProfileSchema = z.looseObject({
   bio: bioSchema,
   tags: tagsSchema,
 });
+
+export const createProfileSchema = z.preprocess(
+  keepActiveContents,
+  profileSchema,
+);

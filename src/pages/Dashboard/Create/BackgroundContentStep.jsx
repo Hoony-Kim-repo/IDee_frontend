@@ -1,51 +1,34 @@
+/**
+ * BackgroundContentStep.jsx
+ *
+ * Fifth step of the create-dashboard wizard ("Background contents").
+ * Shows one content editor per slot of the layout selected in the previous step, arranged like the layout itself (config/layouts.js).
+ *
+ * The form always holds content for the largest layout (see config/defaultValues.js),
+ * so this step only decides how many editors to show.
+ * Hidden slots keep their data, which mans switching to a smaller layout and back does not lose anything.
+ * The submitted data is cut to the current layout in the Zod schema.
+ *
+ * Note: The content belongs to the slot NUMBER, not to its name.
+ * Switching between two layouts with the same number of slots keeps the content in the same slot
+ */
 import { Box, Grid, Heading } from "@chakra-ui/react";
-import { useEffect, useMemo } from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 import { layouts } from "./config/layouts";
 import BackgroundContentEditor from "./editors/BackgroundContentEditor";
 
 const BackgroundContentStep = () => {
-  const { control, watch } = useFormContext();
-
-  // Selected Layout value from RHF
-  const selectedLayoutValue = watch("backgroundLayout");
+  // Selected layout value from the form (inside <FormProvider> no 'control' is needed)
+  const selectedLayoutValue = useWatch({ name: "backgroundLayout" });
 
   // Lookup Layout config
-  const selectedLayout = useMemo(() => {
-    return layouts.find((layout) => layout.value === selectedLayoutValue);
-  }, [selectedLayoutValue]);
+  const selectedLayout = layouts.find(
+    (layout) => layout.value === selectedLayoutValue,
+  );
 
-  // Derived values from layout config
-  const slots = selectedLayout?.slots ?? [];
-  const contentCount = slots.length;
-  const layout = selectedLayout?.layout;
+  if (!selectedLayout) return null;
 
-  // RHF FieldArray controller
-  const { fields, replace } = useFieldArray({
-    control,
-    name: "backgroundContents",
-  });
-
-  // Sync fieldArray length with layout contentCount
-  useEffect(() => {
-    if (!contentCount) return;
-
-    if (fields.length === contentCount) return;
-
-    const nextFields = Array.from(
-      { length: contentCount },
-      (_, index) =>
-        fields[index] ?? {
-          type: "",
-          data: {},
-        },
-    );
-
-    replace(nextFields);
-  }, [contentCount, fields, replace]);
-
-  // Safety Guards
-  if (!selectedLayout || !layout) return null;
+  const { slots, layout } = selectedLayout;
 
   return (
     <Box>
@@ -54,12 +37,14 @@ const BackgroundContentStep = () => {
       </Heading>
 
       <Grid
-        templateColumns={layout.templateColumns}
-        templateRows={`repeat(${layout.rowCounts}), auto`}
-        templateAreas={layout.areas}
+        templateColumns={{ base: "minmax(0, 1fr)", md: layout.templateColumns }}
+        templateRows={{ base: "none", md: `repeat(${layout.rowCounts}, auto)` }}
+        templateAreas={{ base: "none", md: layout.areas }}
+        gap={6}
       >
         {slots.map((slot, index) => (
-          <Box key={slot.id} gridArea={slot.id}>
+          // minW={0}: a grid cell must not be pushed wider by a wide editor (for example the table editor).
+          <Box key={slot.id} gridArea={{ base: "auto", md: slot.id }} minW={0}>
             <Heading size={"sm"}>{slot.label}</Heading>
 
             <BackgroundContentEditor index={index} />
