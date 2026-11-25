@@ -90,14 +90,21 @@ const config = defineConfig({
         dashboardCardBg: {
           value: { base: "rgba(255,255,255, 0.8)", _dark: "rgba(0,0,0,0.8)" },
         },
-        dialogBg: {
-          value: { base: "{colors.brand.50}", _dark: "rgba(0,0,0,1)" },
+        overlayBg: {
+          value: { base: "{colors.white.50}", _dark: "{colors.black.100}" },
         },
 
         avatarMenuItemHighlight: {
           value: {
             base: "{colors.menuHighlight.200}",
-            _dark: "{colors.menuHighlight.400}",
+            _dark: "{colors.menuHighlight.800}",
+          },
+        },
+
+        menuItemHighlight: {
+          value: {
+            base: "{colors.brand.200}",
+            _dark: "{colors.brand.800}",
           },
         },
 

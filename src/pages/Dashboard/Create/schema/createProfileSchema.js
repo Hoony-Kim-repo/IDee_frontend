@@ -219,10 +219,9 @@ const keepActiveContents = (values) => {
 
   return {
     ...values,
-    backgroundContents: values.backgroundContents.slice(
-      0,
-      getSlotCount(values.backgroundLayout),
-    ),
+    backgroundContents: values.backgroundContents
+      .slice(0, getSlotCount(values.backgroundLayout))
+      .map(({ type, data }) => ({ type, data })),
   };
 };
 

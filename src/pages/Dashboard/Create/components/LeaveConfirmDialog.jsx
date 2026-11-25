@@ -29,7 +29,7 @@ const LeaveConfirmDialog = ({ isOpen, onClose, onConfirm }) => {
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content bg={"dialogBg"}>
+          <Dialog.Content bg={"overlayBg"}>
             <Dialog.Header>
               <Dialog.Title>Leave without creating your profile?</Dialog.Title>
             </Dialog.Header>
